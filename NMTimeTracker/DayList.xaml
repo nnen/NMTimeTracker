@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="NMTimeTracker.DayList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NMTimeTracker"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:DateConverter x:Key="DateConverter"/>
+        <local:TimeSpanConverter x:Key="TimeSpanConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Days, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DayList}}}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Date, Converter={StaticResource DateConverter}}" Grid.Row="0" Grid.Column="0" />
+                        <TextBlock Text="{Binding Time, Converter={StaticResource TimeSpanConverter}}" Grid.Row="0" Grid.Column="1" TextAlignment="Right" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

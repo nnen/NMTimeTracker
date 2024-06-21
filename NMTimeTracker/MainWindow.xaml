@@ -1,0 +1,38 @@
+﻿<Window x:Class="NMTimeTracker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NMTimeTracker"
+        mc:Ignorable="d"
+        Title="NM Time Tracker" Height="200" Width="300" Background="#FF1E1E1E" ResizeMode="CanMinimize" Icon="/Icon.bmp">
+    <Grid>
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Start on launch" Name="MenuStartOnLaunch" IsCheckable="True" IsChecked="{Binding Settings.StartOnLaunch}" />
+                <MenuItem Header="Start on unlock" Name="MenuStartOnUnlock" IsCheckable="True" IsChecked="{Binding Settings.StartOnUnlock}" />
+                <MenuItem Header="Stop on lock" Name="MenuStopOnLock" IsCheckable="True" IsChecked="{Binding Settings.StopOnLock}" />
+                <Separator />
+                <MenuItem Header="History" Name="MenuHistory" Click="MenuHistory_Click" />
+                <Separator />
+                <MenuItem Header="Settings" Name="MenuSettings" Click="MenuSettings_Click" />
+                <MenuItem Header="Exit" Name="MenuExit" Click="MenuExit_Click" />
+            </ContextMenu>
+        </Grid.ContextMenu>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.ColumnSpan="2" Grid.Column="0" Text="{Binding TotalTimeString}" FontSize="36" Foreground="White" TextAlignment="Center" VerticalAlignment="Center">
+            <TextBlock.Effect>
+                <DropShadowEffect/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <Button Grid.Row="1" Grid.Column="0" Content="Start" Click="Button_Start"/>
+        <Button Grid.Row="1" Grid.Column="1" Content="Stop" Click="Button_Stop" IsEnabled="{Binding Tracker.IsTimeRunning, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"/>
+    </Grid>
+</Window>
