@@ -44,8 +44,10 @@ namespace NMTimeTracker
                 {
                     if (Tracker != null)
                     {
-                        SelectedWeek = App.Current.Store.GetWeek(m_selectedDate, DayOfWeek.Monday);
-                        SelectedDay = App.Current.Store.GetDay(m_selectedDate);
+                        var app = App.Current;
+                        var store = app.Store;
+                        SelectedWeek = store.GetWeek(m_selectedDate, app.Settings.FirstDayOfWeek);
+                        SelectedDay = store.GetDay(m_selectedDate);
                     }
                 }
             }

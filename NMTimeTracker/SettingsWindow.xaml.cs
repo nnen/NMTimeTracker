@@ -21,6 +21,12 @@ namespace NMTimeTracker
     {
         public Settings Settings { get; set; }
 
+        public int SelectedFirstDayOfWeek
+        {
+            get => (int)Settings.FirstDayOfWeek;
+            set => Settings.FirstDayOfWeek = (DayOfWeek)value;
+        }
+
         public SettingsWindow()
         {
             InitializeComponent();

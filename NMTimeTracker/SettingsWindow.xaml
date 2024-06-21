@@ -11,6 +11,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -23,8 +24,17 @@
         <CheckBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" IsChecked="{Binding Settings.StopOnLock}" />
         <Label Content="Unpause timer on unlock" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Grid.Row="2" />
         <CheckBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" IsChecked="{Binding Settings.StartOnUnlock}"/>
+        <Label Content="First day of week" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Grid.Row="3" />
+        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Width="120" SelectedIndex="{Binding SelectedFirstDayOfWeek, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SettingsWindow}}}">
+            <ComboBoxItem Content="Sunday"/>
+            <ComboBoxItem Content="Monday"/>
+            <ComboBoxItem Content="Tuesday"/>
+            <ComboBoxItem Content="Wednesday"/>
+            <ComboBoxItem Content="Thursday"/>
+            <ComboBoxItem Content="Friday"/>
+            <ComboBoxItem Content="Saturday"/>
+        </ComboBox>
 
-        <Button x:Name="ButtonOk" Grid.Column="1" Content="Ok" HorizontalAlignment="Right" Grid.Row="3" VerticalAlignment="Bottom" Margin="0,0,8,8" Padding="4,4,4,4" Width="100" Click="ButtonOk_Click"/>
-
+        <Button x:Name="ButtonOk" Grid.Column="1" Content="Ok" HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Bottom" Margin="0,0,8,8" Padding="4,4,4,4" Width="100" Click="ButtonOk_Click"/>
     </Grid>
 </Window>

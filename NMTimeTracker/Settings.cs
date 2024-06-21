@@ -14,6 +14,7 @@ namespace NMTimeTracker
         private bool m_startOnLaunch = true;
         private bool m_stopOnLock = true;
         private bool m_startOnUnlock = true;
+        private DayOfWeek m_firstDayOfWeek = DayOfWeek.Monday;
 
         public bool StartOnLaunch
         {
@@ -39,6 +40,15 @@ namespace NMTimeTracker
             set
             {
                 SetProperty(nameof(StartOnUnlock), ref m_startOnUnlock, value);
+            }
+        }
+
+        public DayOfWeek FirstDayOfWeek
+        {
+            get => m_firstDayOfWeek;
+            set
+            {
+                SetProperty(nameof(FirstDayOfWeek), ref m_firstDayOfWeek, value);
             }
         }
 
