@@ -8,10 +8,12 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <local:DateConverter x:Key="DateConverter"/>
+        <local:ShortDateConverter x:Key="ShortDateConverter"/>
+        <local:DayOfWeekConverter x:Key="DayOfWeekConverter"/>
         <local:TimeSpanConverter x:Key="TimeSpanConverter"/>
     </UserControl.Resources>
     <Grid>
-        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Days, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DayList}}}">
+        <ListBox x:Name="DaysListBox" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Days, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DayList}}}" SelectedItem="{Binding SelectedDay, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DayList}}}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -21,9 +23,11 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Date, Converter={StaticResource DateConverter}}" Grid.Row="0" Grid.Column="0" />
-                        <TextBlock Text="{Binding Time, Converter={StaticResource TimeSpanConverter}}" Grid.Row="0" Grid.Column="1" TextAlignment="Right" />
+                        <TextBlock Text="{Binding Date, Converter={StaticResource DayOfWeekConverter}}" Grid.Row="0" Grid.Column="0" />
+                        <TextBlock Text="{Binding Date, Converter={StaticResource ShortDateConverter}}" Grid.Row="0" Grid.Column="1" TextAlignment="Left" />
+                        <TextBlock Text="{Binding Time, Converter={StaticResource TimeSpanConverter}}" Grid.Row="0" Grid.Column="2" TextAlignment="Right" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

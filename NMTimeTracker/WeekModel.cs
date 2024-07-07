@@ -39,6 +39,16 @@ namespace NMTimeTracker
             }
             Time = time;
         }
+
+
+        public void UpdateIntervals(IEnumerable<Interval> intervals)
+        {
+            m_intervals.Clear();
+            foreach (var interval in intervals)
+            {
+                m_intervals.Add(interval);
+            }
+        }
     }
     
     

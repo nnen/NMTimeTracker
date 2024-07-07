@@ -12,6 +12,9 @@ namespace NMTimeTracker
     {
         private readonly SQLiteConnection m_connection;
 
+        private readonly Dictionary<DateTime, WeakReference<DayModel>> m_days = new Dictionary<DateTime, WeakReference<DayModel>>();
+
+
         private DataStore(SQLiteConnection connection)
         {
             m_connection = connection;
@@ -96,10 +99,27 @@ namespace NMTimeTracker
         public DayModel GetDay(DateTime day)
         {
             var date = day.Date;
+            DayModel? model = null;
+            if (m_days.TryGetValue(date, out var weakDay))
+            {
+                if (weakDay.TryGetTarget(out var existingModel))
+                {
+                    model = existingModel;
+                }
+            }
             var intervals = GetIntervalsInDay(date);
-            return new DayModel(date, intervals);
+            if (model == null)
+            {
+                model = new DayModel(date, intervals);
+                m_days[date] = new WeakReference<DayModel>(model);
+            }
+            else
+            {
+                model.UpdateIntervals(intervals);
+            }
+            return model;
         }
-
+        
         public WeekModel GetWeek(DateTime aWeekDay, DayOfWeek startOfWeek)
         {
             var firstDay = Utils.GetStartOfWeek(aWeekDay, startOfWeek);
