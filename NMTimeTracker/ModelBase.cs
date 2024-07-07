@@ -19,7 +19,7 @@ namespace NMTimeTracker
             }
         }
 
-        protected void SetProperty<T>(string propertyName, ref T value, T newValue) 
+        protected bool SetProperty<T>(string propertyName, ref T value, T newValue) 
         {
             bool changed = !object.Equals(value, newValue);
             value = newValue;
@@ -27,6 +27,7 @@ namespace NMTimeTracker
             {
                 NotifyPropertyChanged(propertyName);
             }
+            return changed;
         }
     }
 }

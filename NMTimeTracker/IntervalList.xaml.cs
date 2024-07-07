@@ -36,8 +36,6 @@ namespace NMTimeTracker
         public IntervalList()
         {
             InitializeComponent();
-
-            DataContext = this;
         }
         
         public event PropertyChangedEventHandler? PropertyChanged;

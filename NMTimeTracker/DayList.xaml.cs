@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,9 @@ namespace NMTimeTracker
         public static readonly DependencyProperty DaysProperty =
             DependencyProperty.Register(nameof(Days), typeof(IEnumerable<DayModel>), typeof(DayList), new PropertyMetadata());
 
+        public static readonly DependencyProperty SelectedDayProperty =
+            DependencyProperty.Register(nameof(SelectedDay), typeof(DayModel), typeof(DayList), new PropertyMetadata());
+
         [System.ComponentModel.Bindable(true)]
         public IEnumerable<DayModel> Days
         {
@@ -30,6 +34,12 @@ namespace NMTimeTracker
             set { SetValue(DaysProperty, value); }
         }
 
+        [System.ComponentModel.Bindable(true)]
+        public DayModel SelectedDay
+        {
+            get { return (DayModel)GetValue(SelectedDayProperty); }
+            set { SetValue(SelectedDayProperty, value); }
+        }
 
         public DayList()
         {

@@ -152,7 +152,7 @@ namespace NMTimeTracker
         private void ShowHistoryWindow()
         {
             var historyWindow = new HistoryWindow();
-            historyWindow.Tracker = Tracker;
+            //historyWindow.Tracker = Tracker;
             historyWindow.Show();
         }
 

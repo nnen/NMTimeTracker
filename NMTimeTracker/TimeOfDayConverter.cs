@@ -40,6 +40,38 @@ namespace NMTimeTracker
     }
 
 
+    [ValueConversion(typeof(DateTime), typeof(string))]
+    public class ShortDateConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DateTime date = (DateTime)value;
+            return date.ToString("d MMM");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+    [ValueConversion(typeof(DateTime), typeof(string))]
+    public class DayOfWeekConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DateTime date = (DateTime)value;
+            return date.ToString("ddd");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
     [ValueConversion(typeof(TimeSpan), typeof(string))]
     public class TimeSpanConverter : IValueConverter
     {
