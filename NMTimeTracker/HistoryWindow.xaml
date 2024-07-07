@@ -43,18 +43,6 @@
             <TextBlock TextWrapping="Wrap" Text="{Binding SelectedWeek.Time, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom"/>
         </Grid>
 
-<!--
-        <StackPanel Grid.Column="0" Grid.Row="0">
-            <Calendar VerticalAlignment="Top" Margin="8,8,8,0" SelectedDate="{Binding SelectedDate}"/>
-            <Button x:Name="TodayButton" Content="Today" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TodayButton_Click" Width="100" Margin="0,8,0,0"/>
-            <TextBlock TextWrapping="Wrap" Text="Day total" Margin="8,16,8,0"/>
-            <TextBlock TextWrapping="Wrap" Text="0h 00m" Margin="8,0,8,0" HorizontalAlignment="Right"/>
-            <TextBlock TextWrapping="Wrap" Text="Week total" Margin="8,8,8,0"/>
-            <TextBlock TextWrapping="Wrap" Text="0h 00m" Margin="8,0,8,0" HorizontalAlignment="Right"/>
-        </StackPanel>
-        -->
-
-        <!-- <local:DayList x:Name="dayList" Grid.Column="1" Days="{Binding SelectedWeek.Days, Mode=OneWay}" SelectedDate="{Binding SelectedDate}"/> -->
         <local:DayList x:Name="dayList" Grid.Column="1" Days="{Binding SelectedWeek.Days, Mode=OneWay}" SelectedDay="{Binding SelectedDay, Mode=TwoWay}"/>
         <local:IntervalList x:Name="intervalList" Intervals="{Binding SelectedDay.Intervals, Mode=OneWay}" Grid.Column="2"/>
     </Grid>
