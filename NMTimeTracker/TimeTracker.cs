@@ -219,6 +219,11 @@ namespace NMTimeTracker
             CurrentIntervalId = null;
         }
 
+        public Modifier AddModifier(DateTime date, TimeSpan time, string? comment = null)
+        {
+            return m_store.CreateModifier(date, time, comment);
+        }
+
         public Modifier AddModifier(TimeSpan time, string? comment = null)
         {
             return m_store.CreateModifier(DateTime.Today, time, comment);

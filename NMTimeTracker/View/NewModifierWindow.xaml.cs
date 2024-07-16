@@ -25,6 +25,20 @@ namespace NMTimeTracker.View
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+
+        private DateTime m_date = DateTime.Today;
+
+        public DateTime Date
+        {
+            get => m_date;
+            set
+            {
+                m_date = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Date)));
+            }
+        }
+
+
         [System.ComponentModel.Bindable(true)]
         public TimeSpan Time 
         {
@@ -87,6 +101,16 @@ namespace NMTimeTracker.View
         {
             this.DialogResult = true;
             Close();
+        }
+
+        private void TodayButton_Click(object sender, RoutedEventArgs e)
+        {
+            Date = DateTime.Today;
+        }
+
+        private void YesterdayButton_Click(object sender, RoutedEventArgs e)
+        {
+            Date = DateTime.Today - TimeSpan.FromDays(1);
         }
     }
 }

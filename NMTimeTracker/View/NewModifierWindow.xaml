@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NMTimeTracker.View"
         mc:Ignorable="d"
-        Title="New Modifier" Height="227" Width="453">
+        Title="New Modifier" Height="345" Width="453">
     <Grid Margin="10">
         <Grid.Resources>
             <Style TargetType="{x:Type Label}">
@@ -21,6 +21,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -28,14 +30,25 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Time" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" >
+
+        <Label Content="Date" HorizontalAlignment="Right" VerticalAlignment="Center" />
+        <DatePicker Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" SelectedDate="{Binding Date, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NewModifierWindow}}}"/>
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+            <Button x:Name="TodayButton" Content="Today" Margin="0,3,5,5" Height="Auto" Click="TodayButton_Click" />
+            <Button x:Name="YesterdayButton" Content="Yesterday" Margin="0,3,5,5" Height="Auto" Click="YesterdayButton_Click"/>
+        </StackPanel>
+
+        <Label Content="Time" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2"/>
+        <local:TimeSpanControl Grid.Column="1" VerticalAlignment="Center" Value="{Binding Time, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NewModifierWindow}}}" Grid.Row="2"/>
+
+        <Label Content="Comment" HorizontalAlignment="Right" Grid.Row="3" VerticalAlignment="Top"/>
+        <TextBox x:Name="CommentTextBox" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" Text="{Binding Comment, FallbackValue=Comment..., Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NewModifierWindow}}}" Height="100"/>
+
+        <Label Grid.ColumnSpan="2" Content="{Binding Description, FallbackValue=[Description], Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NewModifierWindow}}}" Grid.Row="4" VerticalContentAlignment="Bottom" Margin="0,5,0,5" HorizontalContentAlignment="Right"/>
+
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" >
             <Button x:Name="OkButton" Content="Add modifier" Click="OkButton_Click"/>
             <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click"/>
         </StackPanel>
-        <local:TimeSpanControl Grid.Column="1" VerticalAlignment="Center" Value="{Binding Time, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NewModifierWindow}}}"/>
-        <Label Grid.ColumnSpan="2" Content="{Binding Description, FallbackValue=[Description], Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NewModifierWindow}}}" Grid.Row="2" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right"/>
-        <Label Content="Comment" HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Top"/>
-        <TextBox x:Name="CommentTextBox" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Comment, FallbackValue=Comment..., Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NewModifierWindow}}}"/>
     </Grid>
 </Window>

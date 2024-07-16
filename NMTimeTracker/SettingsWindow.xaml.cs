@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NMTimeTracker.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,12 @@ namespace NMTimeTracker
         {
             Settings.Save();
             Close();
+        }
+
+        private void GenerateHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new GenerateHistoryWindow();
+            window.ShowDialog();
         }
     }
 }

@@ -151,7 +151,7 @@ namespace NMTimeTracker
             var result = addModifierWindow.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                Tracker.AddModifier(addModifierWindow.Time, addModifierWindow.Comment);
+                Tracker.AddModifier(addModifierWindow.Date, addModifierWindow.Time, addModifierWindow.Comment);
             }
         }
 

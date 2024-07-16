@@ -1,0 +1,41 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NMTimeTracker.View"
+        xmlns:Model="clr-namespace:NMTimeTracker.Model" x:Class="NMTimeTracker.View.GenerateHistoryWindow"
+        mc:Ignorable="d"
+        Title="Generate History" Height="282" Width="419" SizeToContent="WidthAndHeight">
+    <Window.DataContext>
+        <Model:GenerateHistoryViewModel IntervalsPerDay="10" ModifiersPerDay="10" NumberOfDays="365"/>
+    </Window.DataContext>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Number of days" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding NumberOfDays}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
+
+        <Label Grid.Row="1" Content="Intervals per day" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding IntervalsPerDay}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
+
+        <Label Grid.Row="2" Content="Modifiers per day" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ModifiersPerDay}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.ColumnSpan="2">
+            <ProgressBar MinWidth="100" Value="{Binding Progress, Mode=OneWay}" Maximum="1" Visibility="{Binding ProgressVisibility, Mode=OneWay}" />
+            <Button x:Name="ButtonGenerate" Content="Generate" Click="ButtonGenerate_Click"/>
+            <Button x:Name="ButtonCancel" Content="Cancel" Click="ButtonCancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
