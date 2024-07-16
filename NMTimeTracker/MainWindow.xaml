@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NMTimeTracker"
         mc:Ignorable="d"
         Title="NM Time Tracker" Height="200" Width="300" Background="#FF1E1E1E" ResizeMode="CanMinimize" Icon="/Icon.bmp">
-    <Grid>
+    <Grid Background="#FF1E1E1E">
         <Grid.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="Start on launch" Name="MenuStartOnLaunch" IsCheckable="True" IsChecked="{Binding Settings.StartOnLaunch}" />
@@ -26,7 +26,7 @@
             <RowDefinition Height="3*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Column="0" Text="{Binding TotalTimeString}" FontSize="36" Foreground="White" TextAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Grid.Column="0" Text="{Binding TotalTimeString, FallbackValue=0:00:00}" FontSize="36" Foreground="White" TextAlignment="Center" VerticalAlignment="Center">
             <TextBlock.Effect>
                 <DropShadowEffect/>
             </TextBlock.Effect>

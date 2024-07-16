@@ -51,6 +51,11 @@ namespace NMTimeTracker.View
             get
             {
                 var time = Time;
+                if (time.TotalSeconds < 0)
+                {
+                    time = time.Negate();
+                    return $"Subtract {time.Hours} hours, {time.Minutes} minutes and {time.Seconds} seconds.";
+                }
                 return $"Add {time.Hours} hours, {time.Minutes} minutes and {time.Seconds} seconds.";
             }
         }
