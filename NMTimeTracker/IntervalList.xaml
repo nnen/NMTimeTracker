@@ -11,7 +11,13 @@
         <local:TimeOfDayConverter x:Key="TimeOfDayConverter"/>
     </UserControl.Resources>
     <Grid>
-        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Intervals, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:IntervalList}}}">
+        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Intervals, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:IntervalList}}}" SelectedItem="{Binding SelectedInterval, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:IntervalList}}}">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Remove" Name="MenuRemoveInterval" Click="MenuRemoveInterval_Click" Command="{Binding RemoveSelectedIntervalCommand}" />
+                    <!-- <MenuItem Header="Edit" Name="MenuEditInterval" /> -->
+                </ContextMenu>
+            </ListBox.ContextMenu>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

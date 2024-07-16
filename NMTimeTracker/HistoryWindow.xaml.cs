@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NMTimeTracker.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,6 +54,60 @@ namespace NMTimeTracker
             if ((originalElement is CalendarDayButton) || (originalElement is CalendarItem))
             {
                 originalElement.ReleaseMouseCapture();
+            }
+        }
+
+
+        private void DeleteSelectedIntervals()
+        {
+            if (DataContext is HistoryViewModel viewModel)
+            {
+                int count = IntervalsDataGrid.SelectedItems.Count;
+                if (System.Windows.MessageBox.Show($"Do you really want to delete {count} interval(s)?", "Delete Interval", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    var intervals = IntervalsDataGrid.SelectedItems.Cast<Interval>().ToArray();
+                    viewModel.RemoveIntervals(intervals);
+                }
+            }
+        }
+
+        private void DeleteSelectedModifiers()
+        {
+            if (DataContext is HistoryViewModel viewModel)
+            {
+                int count = ModifiersDataGrid.SelectedItems.Count;
+                if (System.Windows.MessageBox.Show($"Do you really want to delete {count} modifier(s)?", "Delete Modifier", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    var modifiers = ModifiersDataGrid.SelectedItems.Cast<Modifier>().ToArray();
+                    viewModel.RemoveModifiers(modifiers);
+                }
+            }
+        }
+
+
+        private void DeleteInterval_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteSelectedIntervals();
+        }
+
+        private void DeleteModifier_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteSelectedModifiers();
+        }
+
+        private void IntervalsDataGrid_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                DeleteSelectedIntervals();
+            }
+        }
+
+        private void ModifiersDataGrid_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                DeleteSelectedModifiers();
             }
         }
     }

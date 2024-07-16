@@ -21,18 +21,25 @@
         </Grid.ContextMenu>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.ColumnSpan="2" Grid.Column="0" Text="{Binding TotalTimeString}" FontSize="36" Foreground="White" TextAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Grid.Column="0" Text="{Binding TotalTimeString}" FontSize="36" Foreground="White" TextAlignment="Center" VerticalAlignment="Center">
             <TextBlock.Effect>
                 <DropShadowEffect/>
             </TextBlock.Effect>
         </TextBlock>
-        <Button Grid.Row="1" Grid.Column="0" Content="Start" Click="Button_Start"/>
-        <Button Grid.Row="1" Grid.Column="1" Content="Stop" Click="Button_Stop" IsEnabled="{Binding Tracker.IsTimeRunning, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Start" Click="Button_Start"/>
+            <Button Grid.Column="1" Content="Stop" Click="Button_Stop" IsEnabled="{Binding Tracker.IsTimeRunning, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"/>
+            <Button Grid.Column="2" Content="Modifier" Click="Button_Modifier" />
+        </Grid>
     </Grid>
 </Window>

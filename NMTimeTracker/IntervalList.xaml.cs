@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using NMTimeTracker.Model;
 
 namespace NMTimeTracker
 {
@@ -24,6 +25,9 @@ namespace NMTimeTracker
     {
         public static readonly DependencyProperty IntervalsProperty =
             DependencyProperty.Register(nameof(Intervals), typeof(IEnumerable<Interval>), typeof(IntervalList), new PropertyMetadata());
+        
+        public static readonly DependencyProperty SelectedIntervalProperty =
+            DependencyProperty.Register(nameof(SelectedInterval), typeof(Interval), typeof(IntervalList), new PropertyMetadata());
 
         [System.ComponentModel.Bindable(true)]
         public IEnumerable<Interval> Intervals
@@ -32,7 +36,14 @@ namespace NMTimeTracker
             set { SetValue(IntervalsProperty, value); }
         }
 
+        [System.ComponentModel.Bindable(true)]
+        public Interval SelectedInterval
+        {
+            get { return (Interval)GetValue(SelectedIntervalProperty); }
+            set { SetValue(SelectedIntervalProperty, value); }
+        }
 
+        
         public IntervalList()
         {
             InitializeComponent();
@@ -46,6 +57,10 @@ namespace NMTimeTracker
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        private void MenuRemoveInterval_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

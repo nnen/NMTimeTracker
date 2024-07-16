@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NMTimeTracker
+namespace NMTimeTracker.Model
 {
     public class ModelBase : INotifyPropertyChanged
     {
@@ -13,15 +13,15 @@ namespace NMTimeTracker
 
         protected void NotifyPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null) 
+            if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
-        protected bool SetProperty<T>(string propertyName, ref T value, T newValue) 
+        protected bool SetProperty<T>(string propertyName, ref T value, T newValue)
         {
-            bool changed = !object.Equals(value, newValue);
+            bool changed = !Equals(value, newValue);
             value = newValue;
             if (changed)
             {

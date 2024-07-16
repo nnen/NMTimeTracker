@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="History" Height="450" Width="800" IsVisibleChanged="WindowBase_IsVisibleChanged">
     <local:WindowBase.Resources>
+        <local:TimeOfDayConverter x:Key="TimeOfDayConverter"/>
         <local:DateConverter x:Key="DateConverter"/>
         <local:TimeSpanConverter x:Key="TimeSpanConverter"/>
     </local:WindowBase.Resources>
@@ -15,9 +16,8 @@
     </local:WindowBase.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="195"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Row="0" Grid.Column="0">
@@ -32,7 +32,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            
+
             <Calendar VerticalAlignment="Top" Margin="8,8,8,0" SelectedDate="{Binding SelectedDate}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" DisplayDate="{Binding SelectedDate}" GotMouseCapture="Calendar_GotMouseCapture"/>
             <Button x:Name="TodayButton" Content="Today" VerticalAlignment="Top" Click="TodayButton_Click" Margin="8,8,8,0" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" />
             <TextBlock TextWrapping="Wrap" Text="Date" Margin="8,16,8,0" Grid.Row="2"/>
@@ -43,7 +43,41 @@
             <TextBlock TextWrapping="Wrap" Text="{Binding SelectedWeek.Time, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom"/>
         </Grid>
 
-        <local:DayList x:Name="dayList" Grid.Column="1" Days="{Binding SelectedWeek.Days, Mode=OneWay}" SelectedDay="{Binding SelectedDay, Mode=TwoWay}"/>
-        <local:IntervalList x:Name="intervalList" Intervals="{Binding SelectedDay.Intervals, Mode=OneWay}" Grid.Column="2"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <local:DayList x:Name="dayList" Grid.Row="0" Days="{Binding SelectedWeek.Days, Mode=OneWay}" SelectedDay="{Binding SelectedDay, Mode=TwoWay}"/>
+            <!-- <local:IntervalList x:Name="intervalList" Intervals="{Binding SelectedDay.Intervals, Mode=OneWay}" SelectedInterval="{Binding SelectedInterval, Mode=TwoWay}"/> -->
+            <DataGrid x:Name="IntervalsDataGrid" AutoGenerateColumns="False" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding SelectedDay.Intervals, Mode=OneWay}" GridLinesVisibility="None" AlternatingRowBackground="#FFE2FFDF" PreviewKeyDown="IntervalsDataGrid_PreviewKeyDown">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Start" Binding="{Binding StartTimeOfDay}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Start Reason" Binding="{Binding StartReason}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="End" Binding="{Binding EndTimeOfDay}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="End Reason" Binding="{Binding EndReason}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Time" Binding="{Binding Span, Converter={StaticResource TimeSpanConverter}}" IsReadOnly="True" />
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Delete Interval" Click="DeleteInterval_Click"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+            <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="5"/>
+            <DataGrid x:Name="ModifiersDataGrid" AutoGenerateColumns="False" Grid.Row="3" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding SelectedDay.Modifiers, Mode=OneWay}" GridLinesVisibility="None" HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" AlternatingRowBackground="#FFE2FFDF" PreviewKeyDown="ModifiersDataGrid_PreviewKeyDown">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Modifier" Binding="{Binding Time}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" IsReadOnly="True" />
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Delete Modifier" Click="DeleteModifier_Click"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+        </Grid>
     </Grid>
 </local:WindowBase>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using NMTimeTracker.Model;
 
 namespace NMTimeTracker
 {
@@ -11,6 +13,7 @@ namespace NMTimeTracker
         private DateTime m_selectedDate = DateTime.Today;
         private WeekModel m_selectedWeek;
         private DayModel m_selectedDay;
+        private Interval m_selectedInterval;
         private bool m_updating = false;
         
         public DateTime SelectedDate
@@ -43,9 +46,51 @@ namespace NMTimeTracker
             }
         }
 
+        public Interval SelectedInterval
+        {
+            get => m_selectedInterval;
+            set => SetProperty(nameof(SelectedInterval), ref m_selectedInterval, value);
+        }
+
+        public ICommand RemoveSelectedIntervalCommand { get; } 
+
+
         public HistoryViewModel()
         {
+            RemoveSelectedIntervalCommand = new LambdaCommand(this.RemoveSelectedInterval);
+
             UpdateFromSelectedDate();
+        }
+
+
+        public void RemoveSelectedInterval()
+        {
+            if (SelectedInterval != null)
+            {
+                var app = App.Current;
+                var store = app.Store;
+                store.DeleteInterval(SelectedInterval);
+            }
+        }
+
+        public void RemoveIntervals(IEnumerable<Interval> intervals)
+        {
+            var app = App.Current;
+            var store = app.Store;
+            foreach (var interval in intervals)
+            {
+                store.DeleteInterval(interval);
+            }
+        }
+
+        public void RemoveModifiers(IEnumerable<Modifier> modifiers)
+        {
+            var app = App.Current;
+            var store = app.Store;
+            foreach (var modifier in modifiers)
+            {
+                store.DeleteModifier(modifier);
+            }
         }
 
         private void UpdateFromSelectedDate()
@@ -57,7 +102,10 @@ namespace NMTimeTracker
                 var app = App.Current;
                 var store = app.Store;
                 var selectedDate = SelectedDate;
-                SelectedWeek = store.GetWeek(selectedDate, app.Settings.FirstDayOfWeek);
+                if ((SelectedWeek == null) || !SelectedWeek.Contains(selectedDate))
+                {
+                    SelectedWeek = store.GetWeek(selectedDate, app.Settings.FirstDayOfWeek);
+                }
                 SelectedDay = store.GetDay(selectedDate);
             }
             finally 
@@ -78,7 +126,10 @@ namespace NMTimeTracker
                 var day = SelectedDay;
                 if (day != null)
                 {
-                    SelectedWeek = store.GetWeek(day.Date, app.Settings.FirstDayOfWeek);
+                    if ((SelectedWeek == null) || !SelectedWeek.Contains(day.Date))
+                    {
+                        SelectedWeek = store.GetWeek(day.Date, app.Settings.FirstDayOfWeek);
+                    }
                     SelectedDate = day.Date;
                 }
             }

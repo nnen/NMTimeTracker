@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using NMTimeTracker.View;
+using System.ComponentModel;
 using System.DirectoryServices;
 using System.Media;
 using System.Windows;
@@ -41,6 +42,7 @@ namespace NMTimeTracker
         {
             get
             {
+                Tracker.UpdateTotalTime();
                 TimeSpan span = Tracker.TotalTime;
                 return $"{span.Hours}:{span.Minutes:00}:{span.Seconds:00}";
             }
@@ -141,6 +143,16 @@ namespace NMTimeTracker
         {
             Tracker.StopTime(TimeTrackerEvents.UserStop);
             ForceUpdateTimeText();
+        }
+
+        private void Button_Modifier(object sender, RoutedEventArgs e)
+        {
+            var addModifierWindow = new NewModifierWindow();
+            var result = addModifierWindow.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                Tracker.AddModifier(addModifierWindow.Time, addModifierWindow.Comment);
+            }
         }
 
         private void MenuExit_Click(object sender, RoutedEventArgs e)

@@ -13,21 +13,26 @@
         <local:TimeSpanConverter x:Key="TimeSpanConverter"/>
     </UserControl.Resources>
     <Grid>
-        <ListBox x:Name="DaysListBox" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Days, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DayList}}}" SelectedItem="{Binding SelectedDay, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DayList}}}">
+        <ListBox x:Name="DaysListBox" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Days, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DayList}}}" SelectedItem="{Binding SelectedDay, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DayList}}}" BorderBrush="{x:Null}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Margin="0,0,5,0">
                         <Grid.RowDefinitions>
+                            <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
-                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Date, Converter={StaticResource DayOfWeekConverter}}" Grid.Row="0" Grid.Column="0" />
-                        <TextBlock Text="{Binding Date, Converter={StaticResource ShortDateConverter}}" Grid.Row="0" Grid.Column="1" TextAlignment="Left" />
-                        <TextBlock Text="{Binding Time, Converter={StaticResource TimeSpanConverter}}" Grid.Row="0" Grid.Column="2" TextAlignment="Right" />
+                        <TextBlock Text="{Binding Date, Converter={StaticResource DayOfWeekConverter}}" Grid.Row="0" Grid.Column="0" Margin="0,0,5,0" FontSize="14" />
+                        <TextBlock Text="{Binding Date, Converter={StaticResource ShortDateConverter}}" Grid.Row="0" Grid.Column="1"  TextAlignment="Right" FontSize="14" />
+                        <TextBlock Text="{Binding Time, Converter={StaticResource TimeSpanConverter}}" Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Right" Margin="0,0,0,0" FontSize="18" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
