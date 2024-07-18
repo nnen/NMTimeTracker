@@ -13,7 +13,7 @@
         <local:TimeSpanConverter x:Key="TimeSpanConverter"/>
     </UserControl.Resources>
     <Grid>
-        <ListBox x:Name="DaysListBox" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Days, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DayList}}}" SelectedItem="{Binding SelectedDay, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DayList}}}" BorderBrush="{x:Null}">
+        <ListBox x:Name="DaysListBox" HorizontalContentAlignment="Stretch" d:ItemsSource="{d:SampleData ItemCount=7}" ItemsSource="{Binding Days, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DayList}}}" SelectedItem="{Binding SelectedDay, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DayList}}}" BorderBrush="{x:Null}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel IsItemsHost="True" />
@@ -21,7 +21,7 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="0,0,5,0" MinWidth="60">
+                    <Grid Margin="5" MinWidth="55">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
@@ -30,8 +30,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Date, Converter={StaticResource DayOfWeekConverter}}" Grid.Row="0" Grid.Column="0" TextAlignment="Left" FontSize="18" />
-                        <TextBlock Text="{Binding Date, Converter={StaticResource ShortDateConverter}}" Grid.Row="1" Grid.Column="0"  TextAlignment="Right" FontSize="14" />
+                        <TextBlock Text="{Binding Date, Converter={StaticResource DayOfWeekConverter}}" Grid.Row="0" Grid.Column="0" TextAlignment="Right" FontSize="18" />
+                        <TextBlock Text="{Binding Date, Converter={StaticResource ShortDateConverter}}" Grid.Row="1" Grid.Column="0"  TextAlignment="Right" FontSize="12" />
                         <TextBlock Text="{Binding Time, Converter={StaticResource TimeSpanConverter}}" Grid.Row="2" TextAlignment="Right" FontSize="14" />
                     </Grid>
                 </DataTemplate>

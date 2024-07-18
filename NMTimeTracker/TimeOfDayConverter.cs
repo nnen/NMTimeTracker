@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace NMTimeTracker
@@ -53,8 +54,15 @@ namespace NMTimeTracker
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            DateTime date = (DateTime)value;
-            return date.ToString("d MMM");
+            if (value is DateTime date)
+            {
+                return date.ToString("d MMM");
+            }
+            else if (value is string str)
+            {
+                return str;
+            }
+            return DependencyProperty.UnsetValue;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -69,8 +77,15 @@ namespace NMTimeTracker
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            DateTime date = (DateTime)value;
-            return date.ToString("ddd");
+            if (value is DateTime date)
+            {
+                return date.ToString("ddd");
+            }
+            else if (value is string str)
+            {
+                return str;
+            }
+            return DependencyProperty.UnsetValue;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

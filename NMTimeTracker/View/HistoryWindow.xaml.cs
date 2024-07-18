@@ -110,5 +110,12 @@ namespace NMTimeTracker
                 DeleteSelectedModifiers();
             }
         }
+
+        private void ModifiersDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+            }
+        }
     }
 }
