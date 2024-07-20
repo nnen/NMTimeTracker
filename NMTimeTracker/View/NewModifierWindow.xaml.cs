@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NMTimeTracker.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -18,73 +19,30 @@ namespace NMTimeTracker.View
     /// <summary>
     /// Interaction logic for NewModifierWindow.xaml
     /// </summary>
-    public partial class NewModifierWindow : Window, INotifyPropertyChanged
+    public partial class NewModifierWindow : Window
     {
-        public static readonly DependencyProperty TimeProperty =
-            DependencyProperty.Register(nameof(Time), typeof(TimeSpan), typeof(NewModifierWindow), new PropertyMetadata());
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-
-        private DateTime m_date = DateTime.Today;
-
-        public DateTime Date
-        {
-            get => m_date;
-            set
-            {
-                m_date = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Date)));
-            }
-        }
-
-
-        [System.ComponentModel.Bindable(true)]
-        public TimeSpan Time 
-        {
-            get => (TimeSpan)GetValue(TimeProperty);
-            set => SetValue(TimeProperty, value);
-        }
-
-
-        private string m_comment;
-
-        public string Comment
-        {
-            get => m_comment;
-            set
-            {
-                m_comment = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Comment)));
-            }
-        }
-
-
-        public string Description
+        public Modifier? Modifier
         {
             get
             {
-                var time = Time;
-                if (time.TotalSeconds < 0)
+                if (DataContext is Model.ModifierViewModel vm)
                 {
-                    time = time.Negate();
-                    return $"Subtract {time.Hours} hours, {time.Minutes} minutes and {time.Seconds} seconds.";
+                    return vm.Modifier;
                 }
-                return $"Add {time.Hours} hours, {time.Minutes} minutes and {time.Seconds} seconds.";
+                return null;
             }
-        }
-
-
-        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-        {
-            if (e.Property == TimeProperty)
+            set
             {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                if (DataContext is Model.ModifierViewModel vm)
+                {
+                    vm.Modifier = value;
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
             }
-            
-            base.OnPropertyChanged(e);
         }
-
 
         public NewModifierWindow()
         {
@@ -99,18 +57,40 @@ namespace NMTimeTracker.View
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
+            if (DataContext is Model.ModifierViewModel vm)
+            {
+                vm.AddModifier();
+            }
+            
             this.DialogResult = true;
             Close();
         }
 
         private void TodayButton_Click(object sender, RoutedEventArgs e)
         {
-            Date = DateTime.Today;
+            if (DataContext is Model.ModifierViewModel vm)
+            {
+                vm.Date = DateTime.Today;
+            }
         }
 
         private void YesterdayButton_Click(object sender, RoutedEventArgs e)
         {
-            Date = DateTime.Today - TimeSpan.FromDays(1);
+            if (DataContext is Model.ModifierViewModel vm)
+            {
+                vm.Date = DateTime.Today - TimeSpan.FromDays(1);
+            }
+        }
+
+        private void ApplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is Model.ModifierViewModel vm)
+            {
+                vm.ApplyChanges();
+            }
+
+            this.DialogResult = true;
+            Close();
         }
     }
 }

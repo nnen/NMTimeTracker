@@ -148,11 +148,7 @@ namespace NMTimeTracker
         private void Button_Modifier(object sender, RoutedEventArgs e)
         {
             var addModifierWindow = new NewModifierWindow();
-            var result = addModifierWindow.ShowDialog();
-            if (result.HasValue && result.Value)
-            {
-                Tracker.AddModifier(addModifierWindow.Date, addModifierWindow.Time, addModifierWindow.Comment);
-            }
+            addModifierWindow.ShowDialog();
         }
 
         private void MenuExit_Click(object sender, RoutedEventArgs e)

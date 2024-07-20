@@ -1,6 +1,6 @@
 # NMTimeTracker
 
-NMTimeTracker is a very simple time tracker, meant to help with work-from-home time tracking.
+NMTimeTracker is essentially a software punch clock, meant to help with work-from-home time tracking.
 
 ## Features
 

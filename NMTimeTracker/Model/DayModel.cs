@@ -47,9 +47,11 @@ namespace NMTimeTracker.Model
                 if (!m_time.HasValue)
                 {
                     var time = TimeSpan.Zero;
+                    var dayStart = Date;
+                    var dayEnd = dayStart.AddDays(1);
                     foreach (var interval in Intervals)
                     {
-                        time += interval.Span;
+                        time += interval.GetOverlap(dayStart, dayEnd);
                     }
                     foreach (var modifier in m_modifiers)
                     {

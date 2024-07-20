@@ -22,6 +22,8 @@ namespace NMTimeTracker
         SessionUnlock,
         UserStart,
         UserStop,
+        
+        UnexpectedStop,
     }
     
     public class TimeTracker : ModelBase

@@ -48,6 +48,22 @@
             }
         }
 
+        public TimeSpan GetSpanInDay(DateTime date)
+        {
+            date = date.Date;
+            var endDate = date.AddDays(1);
+
+            return GetOverlap(date, endDate);
+        }
+
+        public TimeSpan GetOverlap(DateTime from, DateTime to)
+        {
+            var start = (Start < from) ? from : Start;
+            var end = (End > to) ? to : End;
+            
+            return end - start;
+        }
+
         public string SpanText
         {
             get

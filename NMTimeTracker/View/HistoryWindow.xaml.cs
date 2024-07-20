@@ -1,4 +1,5 @@
 ﻿using NMTimeTracker.Model;
+using NMTimeTracker.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -111,10 +112,16 @@ namespace NMTimeTracker
             }
         }
 
-        private void ModifiersDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        private void ModifiersDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.EditAction == DataGridEditAction.Commit)
+            if (sender is DataGridRow row)
             {
+                if (row.Item is Modifier modifier)
+                {
+                    var window = new NewModifierWindow();
+                    window.Modifier = modifier;
+                    window.ShowDialog();
+                }
             }
         }
     }

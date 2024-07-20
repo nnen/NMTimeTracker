@@ -67,10 +67,15 @@
                 </DataGrid.ContextMenu>
             </DataGrid>
             <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="5"/>
-            <DataGrid x:Name="ModifiersDataGrid" AutoGenerateColumns="False" Grid.Row="3" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding SelectedDay.Modifiers, Mode=OneWay}" GridLinesVisibility="None" HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" AlternatingRowBackground="#FFE2FFDF" PreviewKeyDown="ModifiersDataGrid_PreviewKeyDown" CellEditEnding="ModifiersDataGrid_CellEditEnding">
+            <DataGrid x:Name="ModifiersDataGrid" AutoGenerateColumns="False" Grid.Row="3" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding SelectedDay.Modifiers, Mode=OneWay}" GridLinesVisibility="None" HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" AlternatingRowBackground="#FFE2FFDF" PreviewKeyDown="ModifiersDataGrid_PreviewKeyDown" MouseDoubleClick="ModifiersDataGrid_MouseDoubleClick">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="ModifiersDataGrid_MouseDoubleClick" />
+                    </Style>
+                </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Modifier" Binding="{Binding Time}" />
-                    <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" />
+                    <DataGridTextColumn Header="Modifier" Binding="{Binding Time}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" IsReadOnly="True" />
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
