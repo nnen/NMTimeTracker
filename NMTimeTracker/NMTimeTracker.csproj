@@ -13,6 +13,10 @@
   <ItemGroup>
     <None Remove="AppIcon.ico" />
     <None Remove="Icon.bmp" />
+    <None Remove="Icons\calendar-clock.png" />
+    <None Remove="Icons\pause.png" />
+    <None Remove="Icons\play.png" />
+    <None Remove="Icons\time-add.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +30,10 @@
   <ItemGroup>
     <Resource Include="AppIcon.ico" />
     <Resource Include="Icon.bmp" />
+    <Resource Include="Icons\calendar-clock.png" />
+    <Resource Include="Icons\pause.png" />
+    <Resource Include="Icons\play.png" />
+    <Resource Include="Icons\time-add.png" />
   </ItemGroup>
 
 </Project>

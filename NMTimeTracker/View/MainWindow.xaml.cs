@@ -151,6 +151,11 @@ namespace NMTimeTracker
             addModifierWindow.ShowDialog();
         }
 
+        private void Button_History(object sender, RoutedEventArgs e)
+        {
+            ShowHistoryWindow();
+        }
+
         private void MenuExit_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();

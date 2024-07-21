@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NMTimeTracker"
         mc:Ignorable="d"
         Title="NM Time Tracker" Height="200" Width="300" Background="#FF1E1E1E" ResizeMode="CanMinimize" Icon="/Icon.bmp">
-    <Grid Background="#FF1E1E1E">
+    <Grid x:Name="grid" Background="#FF1E1E1E">
         <Grid.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="Start on launch" Name="MenuStartOnLaunch" IsCheckable="True" IsChecked="{Binding Settings.StartOnLaunch}" />
@@ -24,22 +24,32 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Text="{Binding TotalTimeString, FallbackValue=0:00:00}" FontSize="36" Foreground="White" TextAlignment="Center" VerticalAlignment="Center">
             <TextBlock.Effect>
                 <DropShadowEffect/>
             </TextBlock.Effect>
         </TextBlock>
-        <Grid Grid.Row="1">
+        <Grid x:Name="grid1" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Start" Click="Button_Start"/>
-            <Button Grid.Column="1" Content="Stop" Click="Button_Stop" IsEnabled="{Binding Tracker.IsTimeRunning, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"/>
-            <Button Grid.Column="2" Content="Modifier" Click="Button_Modifier" />
+            <Button Grid.Column="0" Click="Button_Start" ToolTip="Resume timer">
+                <Image Grid.Row="0" Margin="8" Source="/Icons/play.png" HorizontalAlignment="Center"/>
+            </Button>
+            <Button Grid.Column="1" Click="Button_Stop" IsEnabled="{Binding Tracker.IsTimeRunning, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" ToolTip="Pause timer">
+                <Image Grid.Row="0" Margin="8" Source="/Icons/pause.png" HorizontalAlignment="Center"/>
+            </Button>
+            <Button Grid.Column="2" Click="Button_Modifier" ToolTip="Add time modifier">
+                <Image Grid.Row="0" Margin="8" Source="/Icons/time-add.png" HorizontalAlignment="Center"/>
+            </Button>
+            <Button Grid.Column="3" Click="Button_History" ToolTip="Show history">
+                <Image Grid.Row="0" Margin="8" Source="/Icons/calendar-clock.png" HorizontalAlignment="Center"/>
+            </Button>
         </Grid>
     </Grid>
 </Window>
