@@ -103,10 +103,9 @@ namespace NMTimeTracker
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             TimeSpan span = (TimeSpan)value;
-            int hours = span.Hours;
+            int hours = (int)Math.Floor(span.TotalHours);
             int minutes = span.Minutes;
             return $"{hours}h {minutes:00}m";
-            //return span.ToString(@"hh\h mm\m");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

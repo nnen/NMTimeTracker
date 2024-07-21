@@ -30,17 +30,14 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Calendar VerticalAlignment="Top" Margin="8,8,8,0" SelectedDate="{Binding SelectedDate}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" DisplayDate="{Binding SelectedDate}" GotMouseCapture="Calendar_GotMouseCapture"/>
             <Button x:Name="TodayButton" Content="Today" VerticalAlignment="Top" Click="TodayButton_Click" Margin="8,8,8,0" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" />
-            <TextBlock TextWrapping="Wrap" Text="Date" Margin="8,16,8,0" Grid.Row="2"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedDate, Converter={StaticResource DateConverter}}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
-            <TextBlock TextWrapping="Wrap" Text="Day total" Margin="8,8,8,0" Grid.Row="3"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedDay.Time, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom"/>
-            <TextBlock TextWrapping="Wrap" Text="Week total" Margin="8,8,8,0" Grid.Row="4"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedWeek.Time, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <TextBlock TextWrapping="Wrap" Text="Day total" Margin="8,8,8,0" Grid.Row="2"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedDay.Time, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <TextBlock TextWrapping="Wrap" Text="Week total" Margin="8,8,8,0" Grid.Row="3"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedWeek.Time, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom"/>
         </Grid>
 
         <Grid Grid.Column="1">
