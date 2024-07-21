@@ -7,10 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMTimeTracker", "NMTimeTrac
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B14A5BE2-9579-4E9C-922F-A484DA4FD51D}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMTimeTrackerTests", "NMTimeTrackerTests\NMTimeTrackerTests.csproj", "{1D5B3DE0-9D11-49B6-BD39-4FC85798FE26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NMTimeTrackerTests", "NMTimeTrackerTests\NMTimeTrackerTests.csproj", "{1D5B3DE0-9D11-49B6-BD39-4FC85798FE26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

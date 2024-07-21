@@ -10,3 +10,8 @@ NMTimeTracker is essentially a software punch clock, meant to help with work-fro
 * Time data is persistent. It's stored locally in a SQLite database in `%AppData%\NMTimeTracker\data.sqlite`.
 * No calls home or data collection. 
 * That's it. It's extremly simple right now, but I might add features if requested.
+
+## Screenshots
+
+![Screenshot of the application's main window](Docs/main_window.png)
+![Screenshot of the application's history window](Docs/history_window_.png)
