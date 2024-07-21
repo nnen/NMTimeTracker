@@ -85,10 +85,25 @@ namespace NMTimeTracker
             }
         }
 
+        private void EditModifier(Modifier modifier)
+        {
+            var window = new NewModifierWindow();
+            window.Modifier = modifier;
+            window.ShowDialog();
+        }
+
 
         private void DeleteInterval_Click(object sender, RoutedEventArgs e)
         {
             DeleteSelectedIntervals();
+        }
+
+        private void EditModifier_Click(object sender, RoutedEventArgs e)
+        {
+            if (ModifiersDataGrid.SelectedItem is Modifier modifier)
+            {
+                EditModifier(modifier);
+            }
         }
 
         private void DeleteModifier_Click(object sender, RoutedEventArgs e)
@@ -118,9 +133,7 @@ namespace NMTimeTracker
             {
                 if (row.Item is Modifier modifier)
                 {
-                    var window = new NewModifierWindow();
-                    window.Modifier = modifier;
-                    window.ShowDialog();
+                    EditModifier(modifier);
                 }
             }
         }

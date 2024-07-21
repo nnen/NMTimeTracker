@@ -76,6 +76,7 @@
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
+                        <MenuItem Header="Edit Modifier" Click="EditModifier_Click"/>
                         <MenuItem Header="Delete Modifier" Click="DeleteModifier_Click"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
