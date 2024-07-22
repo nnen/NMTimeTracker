@@ -8,6 +8,7 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>AppIcon.ico</ApplicationIcon>
+    <StartupObject>NMTimeTracker.MainClass</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

@@ -8,6 +8,11 @@ namespace NMTimeTracker
     /// </summary>
     public partial class App : System.Windows.Application
     {
+        public static readonly Guid Guid = new Guid(
+            "AB09E3AB-8C10-43EC-AB7A-D1F5A4261558"
+        );
+
+
         new public static App Current
         {
             get => (App)System.Windows.Application.Current;
@@ -27,7 +32,7 @@ namespace NMTimeTracker
                 Tracker.StopTime(TimeTrackerEvents.AppExit);
                 Tracker.StopListening();
             }
-            
+
             if (Store != null)
             {
                 Store.Dispose();
@@ -59,5 +64,4 @@ namespace NMTimeTracker
             return dirPath;
         }
     }
-
 }
