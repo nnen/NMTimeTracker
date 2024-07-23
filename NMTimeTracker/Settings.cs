@@ -54,7 +54,7 @@ namespace NMTimeTracker
         }
 
 
-        private static string GetFilePath()
+        public static string GetFilePath()
         { 
             var appData = App.GetAppDataDirectoryPath(true);
             return Path.Combine(appData, "settings.json");

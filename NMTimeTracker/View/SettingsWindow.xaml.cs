@@ -1,4 +1,5 @@
-﻿using NMTimeTracker.View;
+﻿using NMTimeTracker.Model;
+using NMTimeTracker.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,24 +21,17 @@ namespace NMTimeTracker
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        public Settings Settings { get; set; }
-
-        public int SelectedFirstDayOfWeek
-        {
-            get => (int)Settings.FirstDayOfWeek;
-            set => Settings.FirstDayOfWeek = (DayOfWeek)value;
-        }
-
         public SettingsWindow()
         {
             InitializeComponent();
-
-            DataContext = this;
         }
 
         private void ButtonOk_Click(object sender, RoutedEventArgs e)
         {
-            Settings.Save();
+            if (DataContext is SettingsViewModel settingsViewModel)
+            {
+                settingsViewModel.Settings.Save();
+            }
             Close();
         }
 

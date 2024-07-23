@@ -177,7 +177,7 @@ namespace NMTimeTracker
         private void MenuSettings_Click(object sender, RoutedEventArgs e)
         {
             var settingsWindow = new SettingsWindow();
-            settingsWindow.Settings = App.Current.Settings;
+            //settingsWindow.Settings = App.Current.Settings;
             settingsWindow.ShowDialog();
         }
     }

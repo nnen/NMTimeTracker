@@ -413,6 +413,21 @@ namespace NMTimeTracker
         }
 
 
+        private static string GetDatabaseDirectoryPath()
+        {
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var appName = typeof(DataStore).Assembly.GetName().Name;
+            var dbPathDir = Path.Combine(appData, appName);
+            return dbPathDir;
+        }
+
+        public static string GetDatabaseFilePath()
+        {
+            var dbPathDir = GetDatabaseDirectoryPath();
+            var dbPath = Path.Combine(dbPathDir, "data.sqlite");
+            return dbPath;
+        }
+
         public static DataStore Create(string connectionString)
         {
             try
@@ -431,12 +446,10 @@ namespace NMTimeTracker
 
         public static DataStore Create() 
         {
-            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var appName = typeof(DataStore).Assembly.GetName().Name;
-            var dbPathDir = Path.Combine(appData, appName);
+            var dbPathDir = GetDatabaseDirectoryPath();
             Directory.CreateDirectory(dbPathDir);
             var dbPath = Path.Combine(dbPathDir, "data.sqlite");
-
+            
             return Create($"Data Source={dbPath};New=True;Compress=True;");
         }
     }
