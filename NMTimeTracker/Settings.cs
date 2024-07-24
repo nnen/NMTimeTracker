@@ -16,6 +16,7 @@ namespace NMTimeTracker
         private bool m_stopOnLock = true;
         private bool m_startOnUnlock = true;
         private DayOfWeek m_firstDayOfWeek = DayOfWeek.Monday;
+        private bool m_mainWindowAlwaysOnTop = false;
 
         public bool StartOnLaunch
         {
@@ -50,6 +51,15 @@ namespace NMTimeTracker
             set
             {
                 SetProperty(nameof(FirstDayOfWeek), ref m_firstDayOfWeek, value);
+            }
+        }
+
+        public bool MainWindowAlwaysOnTop
+        {
+            get => m_mainWindowAlwaysOnTop;
+            set
+            {
+                SetProperty(nameof(MainWindowAlwaysOnTop), ref m_mainWindowAlwaysOnTop, value);
             }
         }
 

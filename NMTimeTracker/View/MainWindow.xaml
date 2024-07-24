@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NMTimeTracker"
         mc:Ignorable="d"
-        Title="NM Time Tracker" Height="200" Width="300" Background="#FF1E1E1E" ResizeMode="CanMinimize" Icon="/Icon.bmp">
+        Title="NM Time Tracker" Height="200" Width="300" Background="#FF1E1E1E" ResizeMode="CanMinimize" Icon="/Icon.bmp" Deactivated="Window_Deactivated">
     <Grid x:Name="grid" Background="#FF1E1E1E">
         <Grid.ContextMenu>
             <ContextMenu>
+                <MenuItem Header="Always on top" Name="MenuAlwaysOnTop" IsCheckable="True" IsChecked="{Binding Settings.MainWindowAlwaysOnTop}" />
                 <MenuItem Header="Start on launch" Name="MenuStartOnLaunch" IsCheckable="True" IsChecked="{Binding Settings.StartOnLaunch}" />
                 <MenuItem Header="Start on unlock" Name="MenuStartOnUnlock" IsCheckable="True" IsChecked="{Binding Settings.StartOnUnlock}" />
                 <MenuItem Header="Stop on lock" Name="MenuStopOnLock" IsCheckable="True" IsChecked="{Binding Settings.StopOnLock}" />

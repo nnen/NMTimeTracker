@@ -20,6 +20,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -50,14 +51,17 @@
             <ComboBoxItem Content="Saturday"/>
         </ComboBox>
 
-        <Label Content="Settings file" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="5" />
-        <Label Content="{Binding SettingsFilePath, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" />
+        <Label Content="Main window always on top" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="5" />
+        <CheckBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" IsChecked="{Binding Settings.MainWindowAlwaysOnTop}" Grid.ColumnSpan="2"/>
 
-        <Label Content="Database file" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="6" />
-        <Label Content="{Binding DatabaseFilePath, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" />
+        <Label Content="Settings file" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="6" />
+        <Label Content="{Binding SettingsFilePath, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" />
 
-        <Button x:Name="GenerateHistoryButton" Grid.Column="1" Content="Generate history..." HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Center" Padding="5,2,5,2" Click="GenerateHistoryButton_Click" Grid.ColumnSpan="2" Visibility="{Binding DevOptionsVisible, Mode=OneWay}"/>
+        <Label Content="Database file" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="7" />
+        <Label Content="{Binding DatabaseFilePath, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="7" Grid.Column="1" />
 
-        <Button x:Name="ButtonOk" Grid.Column="1" Content="Ok" HorizontalAlignment="Right" Grid.Row="8" VerticalAlignment="Bottom" Margin="0,0,8,8" Padding="4,4,4,4" Width="100" Click="ButtonOk_Click"/>
+        <Button x:Name="GenerateHistoryButton" Grid.Column="1" Content="Generate history..." HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Center" Padding="5,2,5,2" Click="GenerateHistoryButton_Click" Grid.ColumnSpan="2" Visibility="{Binding DevOptionsVisible, Mode=OneWay}"/>
+
+        <Button x:Name="ButtonOk" Grid.Column="1" Content="Ok" HorizontalAlignment="Right" Grid.Row="9" VerticalAlignment="Bottom" Margin="0,0,8,8" Padding="4,4,4,4" Width="100" Click="ButtonOk_Click"/>
     </Grid>
 </Window>

@@ -180,5 +180,18 @@ namespace NMTimeTracker
             //settingsWindow.Settings = App.Current.Settings;
             settingsWindow.ShowDialog();
         }
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            if (Settings.MainWindowAlwaysOnTop)
+            {
+                this.Topmost = true;
+                this.Activate();
+            }
+            else
+            {
+                this.Topmost = false; 
+            }
+        }
     }
 }
