@@ -6,62 +6,58 @@
         xmlns:local="clr-namespace:NMTimeTracker"
         xmlns:Model="clr-namespace:NMTimeTracker.Model" x:Class="NMTimeTracker.SettingsWindow"
         mc:Ignorable="d"
-        Title="NMTimeTracker Settings" Height="400" Width="600">
+        Title="NMTimeTracker Settings" Height="650" Width="500">
     <Window.DataContext>
         <Model:SettingsViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Label Content="Version" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0"/>
-        <Label Content="{Binding VersionString}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Label Content="Version" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,8,8,3"/>
+                <Label Content="{Binding VersionString, FallbackValue=0.1.0.0 (CONFIG)}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" Margin="8,3,8,3"/>
 
-        <Label Content="Start timer on launch" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1"/>
-        <CheckBox VerticalAlignment="Center" Grid.Column="1" IsChecked="{Binding Settings.StartOnLaunch}" Grid.ColumnSpan="2" Grid.Row="1"/>
+                <Label Content="Settings file" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
+                <Label Content="{Binding SettingsFilePath, FallbackValue=Settings File Path, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" Margin="8,3,8,3"/>
 
-        <Label Content="Pause timer on lock" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" />
-        <CheckBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" IsChecked="{Binding Settings.StopOnLock}" Grid.ColumnSpan="2" />
+                <Label Content="Database file" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
+                <Label Content="{Binding DatabaseFilePath, FallbackValue=Database File Path, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" Margin="8,3,8,3"/>
 
-        <Label Content="Unpause timer on unlock" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" />
-        <CheckBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="3" IsChecked="{Binding Settings.StartOnUnlock}" Grid.ColumnSpan="2"/>
+                <Label Content="Start timer on launch" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Settings.StartOnLaunch}" Margin="8,3,8,3"/>
 
-        <Label Content="First day of week" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="4" />
-        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Width="120" SelectedIndex="{Binding SelectedFirstDayOfWeek}" Grid.ColumnSpan="2">
-            <ComboBoxItem Content="Sunday"/>
-            <ComboBoxItem Content="Monday"/>
-            <ComboBoxItem Content="Tuesday"/>
-            <ComboBoxItem Content="Wednesday"/>
-            <ComboBoxItem Content="Thursday"/>
-            <ComboBoxItem Content="Friday"/>
-            <ComboBoxItem Content="Saturday"/>
-        </ComboBox>
+                <Label Content="Pause timer on lock" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Settings.StopOnLock}" Margin="8,3,8,3"/>
 
-        <Label Content="Main window always on top" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="5" />
-        <CheckBox VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" IsChecked="{Binding Settings.MainWindowAlwaysOnTop}" Grid.ColumnSpan="2"/>
+                <Label Content="Unpause timer on unlock" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Settings.StartOnUnlock}" Margin="8,3,8,3"/>
 
-        <Label Content="Settings file" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="6" />
-        <Label Content="{Binding SettingsFilePath, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" />
+                <Label Content="First day of week" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
+                <ComboBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectedIndex="{Binding SelectedFirstDayOfWeek}" Margin="8,3,8,3">
+                    <ComboBoxItem Content="Sunday"/>
+                    <ComboBoxItem Content="Monday"/>
+                    <ComboBoxItem Content="Tuesday"/>
+                    <ComboBoxItem Content="Wednesday"/>
+                    <ComboBoxItem Content="Thursday"/>
+                    <ComboBoxItem Content="Friday"/>
+                    <ComboBoxItem Content="Saturday"/>
+                </ComboBox>
 
-        <Label Content="Database file" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="7" />
-        <Label Content="{Binding DatabaseFilePath, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="7" Grid.Column="1" />
+                <Label Content="Main window always on top" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Settings.MainWindowAlwaysOnTop}" Margin="8,3,8,3"/>
 
-        <Button x:Name="GenerateHistoryButton" Grid.Column="1" Content="Generate history..." HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Center" Padding="5,2,5,2" Click="GenerateHistoryButton_Click" Grid.ColumnSpan="2" Visibility="{Binding DevOptionsVisible, Mode=OneWay}"/>
+                <Label Content="Generate history" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3" Visibility="{Binding DevOptionsVisible, Mode=OneWay}"/>
+                <Button x:Name="GenerateHistoryButton" Content="Generate history..." HorizontalAlignment="Left" Margin="8,3,8,3" Padding="5,2,5,2" Click="GenerateHistoryButton_Click" Visibility="{Binding DevOptionsVisible, Mode=OneWay}"/>
+            </StackPanel>
+        </ScrollViewer>
 
-        <Button x:Name="ButtonOk" Grid.Column="1" Content="Ok" HorizontalAlignment="Right" Grid.Row="9" VerticalAlignment="Bottom" Margin="0,0,8,8" Padding="4,4,4,4" Width="100" Click="ButtonOk_Click"/>
+        <Button x:Name="ButtonOk" Content="Ok" HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Bottom" Margin="8" Padding="4,4,4,4" Width="100" Click="ButtonOk_Click"/>
     </Grid>
 </Window>
