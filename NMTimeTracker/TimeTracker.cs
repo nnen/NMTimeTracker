@@ -59,11 +59,8 @@ namespace NMTimeTracker
                     //    m_store.UpdateInterval(m_currentInterval);
                     //}
                 });
-                
-                if (DateTime.Today != m_today.Date)
-                {
-                    Today = m_store.GetDay(DateTime.Today);
-                }
+
+                UpdateToday();
             };
         }
 
@@ -113,8 +110,6 @@ namespace NMTimeTracker
         }
 
 
-        //public ReadOnlyObservableCollection<Interval> Intervals => m_readonlyIntervals;
-
         public DayModel Today
         {
             get => m_today;
@@ -125,20 +120,13 @@ namespace NMTimeTracker
             }
         }
 
-        //public Interval? CurrentInterval
-        //{
-        //    get => m_currentInterval;
-        //    set
-        //    {
-        //        bool changed = !object.ReferenceEquals(m_currentInterval, value);
-        //        m_currentInterval = value;
-        //        if (changed)
-        //        {
-        //            NotifyPropertyChanged(nameof(CurrentInterval));
-        //            NotifyPropertyChanged(nameof(IsTimeRunning));
-        //        }
-        //    }
-        //}
+        private void UpdateToday()
+        {
+            if (m_today.Date != DateTime.Today)
+            {
+                Today = m_store.GetDay(DateTime.Today);
+            }
+        }
 
         public long? CurrentIntervalId
         {
@@ -180,14 +168,12 @@ namespace NMTimeTracker
             }
         }
 
-        //public bool IsTimeRunning => (m_currentInterval != null);
         public bool IsTimeRunning => m_currentIntervalId.HasValue;
 
         public void StartTime(TimeTrackerEvents reason)
         {
-            //m_closedIntervalsSpan = null;
+            UpdateToday();
 
-            //if (m_currentInterval != null)
             if (CurrentInterval != null)
             {
                 return;
@@ -195,19 +181,12 @@ namespace NMTimeTracker
 
             var now = DateTime.Now;
             var interval = m_store.CreateInterval(now, reason);
-            //m_intervals.Add(interval);
-            //CurrentInterval = interval;
             CurrentIntervalId = interval.Id;
             return;
         }
 
         public void StopTime(TimeTrackerEvents reason)
         {
-            //m_closedIntervalsSpan = null;
-
-            //var interval = CurrentInterval;
-            //CurrentInterval = null;
-
             var interval = CurrentInterval;
             if (interval == null)
             {
@@ -236,42 +215,6 @@ namespace NMTimeTracker
             get
             {
                 return m_today.Time;
-
-                //TimeSpan sum = TimeSpan.Zero;
-
-                //if (m_currentInterval != null)
-                //{
-                //    m_currentInterval.End = DateTime.Now;
-                //}
-
-                //foreach (var interval in m_intervals)
-                //{
-                //    sum += interval.Span;
-                //}
-
-                //return sum;
-
-                //if (!m_closedIntervalsSpan.HasValue)
-                //{
-                //    TimeSpan sum = TimeSpan.Zero;
-
-                //    foreach (var interval in m_intervals) 
-                //    {
-                //        if ( interval.IsClosed)
-                //        {
-                //            sum += interval.Span;
-                //        }
-                //    }
-
-                //    m_closedIntervalsSpan = sum;
-                //}
-
-                //if ((m_currentInterval == null) || m_currentInterval.IsClosed)
-                //{
-                //    return m_closedIntervalsSpan.Value;
-                //}
-                //
-                //return m_closedIntervalsSpan.Value + (DateTime.Now - m_currentInterval.Start);
             }
         }
 
@@ -282,31 +225,12 @@ namespace NMTimeTracker
                 m_today.UpdateLastInterval(m_currentIntervalId.Value, DateTime.Now);
                 NotifyPropertyChanged(nameof(TotalTime));
             }
-
-            //var interval = m_today.LastInterval;
-            //if ((interval != null) && m_currentIntervalId.HasValue && (interval.Id == m_currentIntervalId.Value))
-            //{
-            //    interval.End = DateTime.Now;
-            //    m_today.InvalidateTime();
-            //    NotifyPropertyChanged(nameof(TotalTime));
-            //}
-
-            //if (m_currentInterval != null)
-            //{
-            //    m_currentInterval.End = DateTime.Now;
-            //}
-            //m_today.InvalidateTime();
-            //NotifyPropertyChanged(nameof(TotalTime));
         }
 
         private DataStore m_store;
         private System.Timers.Timer m_timer = new System.Timers.Timer();
 
         private DayModel m_today;
-        //private readonly ObservableCollection<Interval> m_intervals;
-        //private readonly ReadOnlyObservableCollection<Interval> m_readonlyIntervals;
-        //private TimeSpan? m_closedIntervalsSpan;
-        //private Interval? m_currentInterval;
         private long? m_currentIntervalId;
 
 
