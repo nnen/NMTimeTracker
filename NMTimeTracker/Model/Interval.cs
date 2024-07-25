@@ -5,6 +5,7 @@
         private long m_id;
 
         private DateTime m_end;
+        private TimeTrackerEvents m_endReason = TimeTrackerEvents.None;
 
         public long Id => m_id;
 
@@ -38,7 +39,15 @@
                 End = new DateTime(DateOnly.FromDateTime(End), value);
             }
         }
-        public TimeTrackerEvents EndReason { get; set; }
+        public TimeTrackerEvents EndReason
+        {
+            get => m_endReason;
+            set
+            {
+                m_endReason = value;
+                NotifyPropertyChanged(nameof(EndReason));
+            }
+        }
 
         public TimeSpan Span
         {

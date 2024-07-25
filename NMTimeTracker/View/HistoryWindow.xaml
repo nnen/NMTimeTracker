@@ -1,12 +1,14 @@
-﻿<local:WindowBase x:Class="NMTimeTracker.HistoryWindow"
+﻿<local:WindowBase
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NMTimeTracker"
+        xmlns:View="clr-namespace:NMTimeTracker.View" x:Class="NMTimeTracker.HistoryWindow"
         mc:Ignorable="d"
         Title="History" Height="450" Width="800" IsVisibleChanged="WindowBase_IsVisibleChanged">
     <local:WindowBase.Resources>
+        <View:EnumToStringConverter x:Key="EnumToStringConverter"/>
         <local:TimeOfDayConverter x:Key="TimeOfDayConverter"/>
         <local:DateConverter x:Key="DateConverter"/>
         <local:TimeSpanConverter x:Key="TimeSpanConverter"/>
@@ -52,9 +54,9 @@
             <DataGrid x:Name="IntervalsDataGrid" AutoGenerateColumns="False" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding SelectedDay.Intervals, Mode=OneWay}" GridLinesVisibility="None" AlternatingRowBackground="#FFE2FFDF" PreviewKeyDown="IntervalsDataGrid_PreviewKeyDown">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Start" Binding="{Binding StartTimeOfDay}" IsReadOnly="True" />
-                    <DataGridTextColumn Header="Start Reason" Binding="{Binding StartReason}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Start Reason" Binding="{Binding StartReason, Converter={StaticResource EnumToStringConverter}}" IsReadOnly="True" />
                     <DataGridTextColumn Header="End" Binding="{Binding EndTimeOfDay}" IsReadOnly="True" />
-                    <DataGridTextColumn Header="End Reason" Binding="{Binding EndReason}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="End Reason" Binding="{Binding EndReason, Converter={StaticResource EnumToStringConverter}}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Time" Binding="{Binding Span, Converter={StaticResource TimeSpanConverter}}" IsReadOnly="True" />
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
@@ -66,8 +68,8 @@
             <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="5"/>
             <DataGrid x:Name="ModifiersDataGrid" AutoGenerateColumns="False" Grid.Row="3" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding SelectedDay.Modifiers, Mode=OneWay}" GridLinesVisibility="None" HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" AlternatingRowBackground="#FFE2FFDF" PreviewKeyDown="ModifiersDataGrid_PreviewKeyDown" MouseDoubleClick="ModifiersDataGrid_MouseDoubleClick">
                 <DataGrid.Resources>
-                    <Style TargetType="DataGridRow">
-                        <EventSetter Event="MouseDoubleClick" Handler="ModifiersDataGrid_MouseDoubleClick" />
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <EventSetter Event="Control.MouseDoubleClick" Handler="ModifiersDataGrid_MouseDoubleClick" />
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>

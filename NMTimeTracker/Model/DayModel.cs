@@ -118,7 +118,7 @@ namespace NMTimeTracker.Model
             InvalidateTime();
         }
 
-        public bool UpdateLastInterval(long id, DateTime end)
+        public bool UpdateLastInterval(long id, DateTime end, TimeTrackerEvents endReason = TimeTrackerEvents.StillRunning)
         {
             if (m_intervals.Count == 0)
             {
@@ -132,6 +132,7 @@ namespace NMTimeTracker.Model
             }
 
             last.End = end;
+            last.EndReason = endReason;
             InvalidateTime();
             return true;
         }

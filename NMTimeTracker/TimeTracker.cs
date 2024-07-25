@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.RightsManagement;
 using System.Text;
@@ -15,15 +16,24 @@ namespace NMTimeTracker
     public enum TimeTrackerEvents
     {
         None,
-        
+
+        [Description("Application started")]
         AppStartup,
+        [Description("Application exited")]
         AppExit,
+        [Description("Session locked")]
         SessionLock,
+        [Description("Session unlocked")]
         SessionUnlock,
+        [Description("Started by user")]
         UserStart,
+        [Description("Stopped by user")]
         UserStop,
         
+        [Description("Unexpected exit")]
         UnexpectedStop,
+        [Description("Still running")]
+        StillRunning,
     }
     
     public class TimeTracker : ModelBase

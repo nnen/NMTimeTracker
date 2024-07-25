@@ -105,9 +105,12 @@ namespace NMTimeTracker
         public void UpdateInterval(Interval interval)
         {
             var endReason = interval.EndReason;
-            if (endReason == TimeTrackerEvents.None)
+            switch (endReason)
             {
+            case TimeTrackerEvents.None:
+            case TimeTrackerEvents.StillRunning:
                 endReason = TimeTrackerEvents.UnexpectedStop;
+                break;
             }
             
             var sql = $"UPDATE IntervalsTable SET Start={ToSQLite(interval.Start)}, StartReason={(int)interval.StartReason}, End={ToSQLite(interval.End)}, EndReason={(int)endReason} WHERE Id={interval.Id};";
