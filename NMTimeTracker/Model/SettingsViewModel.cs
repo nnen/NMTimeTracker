@@ -54,11 +54,5 @@ namespace NMTimeTracker.Model
         }
 
         public Visibility DevOptionsVisible => DevOptionsEnabled ? Visibility.Visible : Visibility.Collapsed;
-
-        public int SelectedFirstDayOfWeek
-        {
-            get => (int)Settings.FirstDayOfWeek;
-            set => Settings.FirstDayOfWeek = (DayOfWeek)value;
-        }
     }
 }

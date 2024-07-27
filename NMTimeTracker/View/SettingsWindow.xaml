@@ -39,21 +39,11 @@
                 <Label Content="Unpause timer on unlock" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding Settings.StartOnUnlock}" Margin="8,3,8,3"/>
 
-                <Label Content="First day of week" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
-                <ComboBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" SelectedIndex="{Binding SelectedFirstDayOfWeek}" Margin="8,3,8,3">
-                    <ComboBoxItem Content="Sunday"/>
-                    <ComboBoxItem Content="Monday"/>
-                    <ComboBoxItem Content="Tuesday"/>
-                    <ComboBoxItem Content="Wednesday"/>
-                    <ComboBoxItem Content="Thursday"/>
-                    <ComboBoxItem Content="Friday"/>
-                    <ComboBoxItem Content="Saturday"/>
-                </ComboBox>
-
                 <Label Content="Main window always on top" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding Settings.MainWindowAlwaysOnTop}" Margin="8,3,8,3"/>
 
                 <Label Content="Generate history" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3" Visibility="{Binding DevOptionsVisible, Mode=OneWay}"/>
+                <Label Content="This can be used to generate mock history for development purposes." VerticalAlignment="Center" Padding="0" Margin="8,3,8,3"/>
                 <Button x:Name="GenerateHistoryButton" Content="Generate history..." HorizontalAlignment="Left" Margin="8,3,8,3" Padding="5,2,5,2" Click="GenerateHistoryButton_Click" Visibility="{Binding DevOptionsVisible, Mode=OneWay}"/>
             </StackPanel>
         </ScrollViewer>

@@ -47,8 +47,6 @@ namespace NMTimeTracker
             m_store = store;
 
             m_today = m_store.GetDay(DateTime.Today);
-            //m_intervals = [.. m_store.GetIntervalsInDay(DateTime.Today)];
-            //m_readonlyIntervals = new(m_intervals);
             
             m_timer.Interval = 60 * 1000;
             m_timer.AutoReset = true;
@@ -62,12 +60,6 @@ namespace NMTimeTracker
                         m_today.UpdateLastInterval(m_currentIntervalId.Value, DateTime.Now);
                         m_store.UpdateInterval(m_today.LastInterval);
                     }
-
-                    //if (m_currentInterval != null)
-                    //{
-                    //    m_currentInterval.End = DateTime.Now;
-                    //    m_store.UpdateInterval(m_currentInterval);
-                    //}
                 });
 
                 UpdateToday();
@@ -116,7 +108,6 @@ namespace NMTimeTracker
                 }
                 break;
             }
-
         }
 
 
@@ -245,6 +236,7 @@ namespace NMTimeTracker
 
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        
         protected void NotifyPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

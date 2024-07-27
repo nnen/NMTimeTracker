@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace NMTimeTracker
         private bool m_startOnLaunch = true;
         private bool m_stopOnLock = true;
         private bool m_startOnUnlock = true;
-        private DayOfWeek m_firstDayOfWeek = DayOfWeek.Monday;
+        // private DayOfWeek m_firstDayOfWeek = DayOfWeek.Monday;
         private bool m_mainWindowAlwaysOnTop = false;
 
         public bool StartOnLaunch
@@ -47,10 +48,10 @@ namespace NMTimeTracker
 
         public DayOfWeek FirstDayOfWeek
         {
-            get => m_firstDayOfWeek;
-            set
+            get
             {
-                SetProperty(nameof(FirstDayOfWeek), ref m_firstDayOfWeek, value);
+                var ci = CultureInfo.CurrentCulture;
+                return ci.DateTimeFormat.FirstDayOfWeek;
             }
         }
 
