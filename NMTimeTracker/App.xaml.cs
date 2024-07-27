@@ -52,10 +52,14 @@ namespace NMTimeTracker
         }
 
 
-        public static string GetAppDataDirectoryPath(bool createDir = false)
+        public static string? GetAppDataDirectoryPath(bool createDir = false)
         {
-            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var appName = typeof(DataStore).Assembly.GetName().Name;
+            if (appName == null)
+            {
+                return null;
+            }
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var dirPath = Path.Combine(appData, appName);
             if (createDir)
             {

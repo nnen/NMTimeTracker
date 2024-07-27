@@ -24,7 +24,7 @@ namespace NMTimeTracker
 
         private System.Timers.Timer m_timer = new System.Timers.Timer();
 
-        public TimeTracker Tracker
+        public TimeTracker? Tracker
         {
             get
             {
@@ -42,6 +42,10 @@ namespace NMTimeTracker
         {
             get
             {
+                if (Tracker == null)
+                {
+                    return "0:00:00";
+                }
                 Tracker.UpdateTotalTime();
                 TimeSpan span = Tracker.TotalTime;
                 return $"{span.Hours}:{span.Minutes:00}:{span.Seconds:00}";
@@ -136,12 +140,12 @@ namespace NMTimeTracker
 
         private void Button_Start(object sender, RoutedEventArgs e)
         {
-            Tracker.StartTime(TimeTrackerEvents.UserStart);
+            Tracker?.StartTime(TimeTrackerEvents.UserStart);
         }
 
         private void Button_Stop(object sender, RoutedEventArgs e)
         {
-            Tracker.StopTime(TimeTrackerEvents.UserStop);
+            Tracker?.StopTime(TimeTrackerEvents.UserStop);
             ForceUpdateTimeText();
         }
 

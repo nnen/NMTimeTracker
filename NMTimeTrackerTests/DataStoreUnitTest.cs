@@ -10,7 +10,7 @@ namespace NMTimeTrackerTests
 {
     public class DataStoreUnitTest
     {
-        private DataStore m_store;
+        private DataStore? m_store;
 
         [SetUp]
         public void Setup()
@@ -32,6 +32,8 @@ namespace NMTimeTrackerTests
         [Test]
         public void CreateInterval()
         {
+            Assert.NotNull(m_store);
+
             var date = new DateTime(2021, 1, 1);
             var day = m_store.GetDay(date);
 
@@ -53,6 +55,8 @@ namespace NMTimeTrackerTests
         [Test]
         public void CreateModifier()
         {
+            Assert.NotNull(m_store);
+
             var date = new DateTime(2021, 1, 1);
             var day = m_store.GetDay(date);
 
@@ -70,6 +74,8 @@ namespace NMTimeTrackerTests
         [Test]
         public void UpdateModifier()
         {
+            Assert.NotNull(m_store);
+
             var date = new DateTime(2021, 1, 1);
             var day = m_store.GetDay(date);
 
@@ -88,6 +94,8 @@ namespace NMTimeTrackerTests
         [Test]
         public void UpdateModifier_Date()
         {
+            Assert.NotNull(m_store);
+
             var date = new DateTime(2021, 1, 1);
             var day1 = m_store.GetDay(date);
             var day2 = m_store.GetDay(new DateTime(2021, 1, 2));
@@ -109,6 +117,8 @@ namespace NMTimeTrackerTests
         [Test]
         public void OverlappingInterval()
         {
+            Assert.NotNull(m_store);
+
             var day1Date = new DateTime(2021, 1, 1);
             var day2Date = new DateTime(2021, 1, 2);
             var start = new DateTime(2021, 1, 1, 23, 0, 0);

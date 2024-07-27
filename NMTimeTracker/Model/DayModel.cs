@@ -8,7 +8,7 @@ namespace NMTimeTracker.Model
         private readonly ReadOnlyObservableCollection<Interval> m_roIntervals;
         
         private readonly ObservableCollectionEx<Modifier> m_modifiers = new ObservableCollectionEx<Modifier>();
-        private ReadOnlyObservableCollection<Modifier> m_roModifiers = null;
+        private ReadOnlyObservableCollection<Modifier>? m_roModifiers;
         
         private TimeSpan? m_time;
 

@@ -51,7 +51,7 @@ namespace NMTimeTracker
 
         private void Calendar_GotMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            UIElement originalElement = e.OriginalSource as UIElement;
+            UIElement? originalElement = e.OriginalSource as UIElement;
             if ((originalElement is CalendarDayButton) || (originalElement is CalendarItem))
             {
                 originalElement.ReleaseMouseCapture();

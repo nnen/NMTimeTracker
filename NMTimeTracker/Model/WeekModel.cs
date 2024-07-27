@@ -56,7 +56,7 @@ namespace NMTimeTracker.Model
         }
 
 
-        private void OnDayPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnDayPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(DayModel.Time))
             {

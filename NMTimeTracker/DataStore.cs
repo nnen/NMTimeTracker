@@ -71,11 +71,11 @@ namespace NMTimeTracker
             return $"'{value.Value.ToString("yyyy-MM-dd")}'";
         }
 
-        public static T FromSQLite<T>(object value)
+        public static T? FromSQLite<T>(object value)
         {
             if (value == DBNull.Value)
             {
-                return default(T);
+                return default;
             }
             return (T)value;
         }
@@ -275,7 +275,7 @@ namespace NMTimeTracker
 
                 transaction.Commit();
             }
-            catch (Exception e)
+            catch
             {
                 transaction.Rollback();
                 throw;
@@ -416,22 +416,30 @@ namespace NMTimeTracker
         }
 
 
-        private static string GetDatabaseDirectoryPath()
+        private static string? GetDatabaseDirectoryPath()
         {
-            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var appName = typeof(DataStore).Assembly.GetName().Name;
+            if (appName == null)
+            {
+                return null;
+            }
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var dbPathDir = Path.Combine(appData, appName);
             return dbPathDir;
         }
 
-        public static string GetDatabaseFilePath()
+        public static string? GetDatabaseFilePath()
         {
             var dbPathDir = GetDatabaseDirectoryPath();
+            if (dbPathDir == null)
+            {
+                return null;
+            }
             var dbPath = Path.Combine(dbPathDir, "data.sqlite");
             return dbPath;
         }
 
-        public static DataStore Create(string connectionString)
+        public static DataStore? Create(string connectionString)
         {
             try
             {
@@ -441,15 +449,20 @@ namespace NMTimeTracker
                 store.CreateSchema();
                 return store;
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }
         }
 
-        public static DataStore Create() 
+        public static DataStore? Create() 
         {
             var dbPathDir = GetDatabaseDirectoryPath();
+            if (dbPathDir == null)
+            {
+                return null;
+            }
+
             Directory.CreateDirectory(dbPathDir);
             var dbPath = Path.Combine(dbPathDir, "data.sqlite");
             

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace NMTimeTracker
         private DateTime m_selectedDate = DateTime.Today;
         private WeekModel m_selectedWeek;
         private DayModel m_selectedDay;
-        private Interval m_selectedInterval;
+        private Interval? m_selectedInterval;
         private bool m_updating = false;
         
         public DateTime SelectedDate
@@ -46,7 +47,7 @@ namespace NMTimeTracker
             }
         }
 
-        public Interval SelectedInterval
+        public Interval? SelectedInterval
         {
             get => m_selectedInterval;
             set => SetProperty(nameof(SelectedInterval), ref m_selectedInterval, value);
@@ -60,6 +61,9 @@ namespace NMTimeTracker
             RemoveSelectedIntervalCommand = new LambdaCommand(this.RemoveSelectedInterval);
 
             UpdateFromSelectedDate();
+
+            Debug.Assert(m_selectedWeek != null);
+            Debug.Assert(m_selectedDay != null);
         }
 
 
@@ -69,7 +73,7 @@ namespace NMTimeTracker
             {
                 var app = App.Current;
                 var store = app.Store;
-                store.DeleteInterval(SelectedInterval);
+                store?.DeleteInterval(SelectedInterval);
             }
         }
 
@@ -77,9 +81,12 @@ namespace NMTimeTracker
         {
             var app = App.Current;
             var store = app.Store;
-            foreach (var interval in intervals)
+            if (store != null)
             {
-                store.DeleteInterval(interval);
+                foreach (var interval in intervals)
+                {
+                    store.DeleteInterval(interval);
+                }
             }
         }
 
@@ -87,9 +94,12 @@ namespace NMTimeTracker
         {
             var app = App.Current;
             var store = app.Store;
-            foreach (var modifier in modifiers)
+            if (store != null)
             {
-                store.DeleteModifier(modifier);
+                foreach (var modifier in modifiers)
+                {
+                    store.DeleteModifier(modifier);
+                }
             }
         }
 
@@ -101,6 +111,10 @@ namespace NMTimeTracker
             {
                 var app = App.Current;
                 var store = app.Store;
+                if (store == null)
+                {
+                    throw new Exception("Data store is not initialized.");
+                }
                 var selectedDate = SelectedDate;
                 if ((SelectedWeek == null) || !SelectedWeek.Contains(selectedDate))
                 {
@@ -122,7 +136,10 @@ namespace NMTimeTracker
             {
                 var app = App.Current;
                 var store = app.Store;
-
+                if (store == null)
+                {
+                    throw new Exception("Data store is not initialized.");
+                }
                 var day = SelectedDay;
                 if (day != null)
                 {

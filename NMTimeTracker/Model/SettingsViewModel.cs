@@ -32,12 +32,12 @@ namespace NMTimeTracker.Model
 
         public string SettingsFilePath
         {
-            get => Settings.GetFilePath();
+            get => Settings.GetFilePath() ?? string.Empty;
         }
 
         public string DatabaseFilePath
         {
-            get => DataStore.GetDatabaseFilePath();
+            get => DataStore.GetDatabaseFilePath() ?? string.Empty;
         }
 
 

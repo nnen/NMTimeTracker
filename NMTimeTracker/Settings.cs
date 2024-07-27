@@ -65,15 +65,23 @@ namespace NMTimeTracker
         }
 
 
-        public static string GetFilePath()
+        public static string? GetFilePath()
         { 
             var appData = App.GetAppDataDirectoryPath(true);
+            if (appData == null)
+            {
+                return null;
+            }
             return Path.Combine(appData, "settings.json");
         }
-
+        
         public void Save()
         {
             var filePath = GetFilePath();
+            if (filePath == null)
+            {
+                throw new InvalidOperationException("Cannot save settings without a file path.");
+            }
             var jsonString = JsonSerializer.Serialize(this);
             File.WriteAllText(filePath, jsonString);
         }

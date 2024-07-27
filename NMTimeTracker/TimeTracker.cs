@@ -38,7 +38,7 @@ namespace NMTimeTracker
     
     public class TimeTracker : ModelBase
     {
-        public TimeTracker(DataStore store)
+        public TimeTracker(DataStore? store)
         {
             if (store == null)
             {
@@ -55,10 +55,11 @@ namespace NMTimeTracker
             {
                 App.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    if (m_currentIntervalId.HasValue)
+                    var interval = CurrentInterval;
+                    if (interval != null)
                     {
-                        m_today.UpdateLastInterval(m_currentIntervalId.Value, DateTime.Now);
-                        m_store.UpdateInterval(m_today.LastInterval);
+                        m_today.UpdateLastInterval(interval.Id, DateTime.Now);
+                        m_store.UpdateInterval(interval);
                     }
                 });
 
@@ -125,10 +126,17 @@ namespace NMTimeTracker
         {
             if (m_today.Date != DateTime.Today)
             {
-                Today = m_store.GetDay(DateTime.Today);
+                if (m_store == null)
+                {
+                    Today = new DayModel(DateTime.Today);
+                }
+                else
+                {
+                    Today = m_store.GetDay(DateTime.Today);
+                }
             }
         }
-
+        
         public long? CurrentIntervalId
         {
             get => m_currentIntervalId;
@@ -180,9 +188,13 @@ namespace NMTimeTracker
                 return;
             }
 
-            var now = DateTime.Now;
-            var interval = m_store.CreateInterval(now, reason);
-            CurrentIntervalId = interval.Id;
+            if (m_store != null)
+            {
+                var now = DateTime.Now;
+                var interval = m_store.CreateInterval(now, reason);
+                CurrentIntervalId = interval.Id;
+            }
+
             return;
         }
 
@@ -193,22 +205,25 @@ namespace NMTimeTracker
             {
                 return;
             }
-            
-            interval.End = DateTime.Now;
-            interval.EndReason = reason;
-            m_store.UpdateInterval(interval);
+
+            if (m_store != null)
+            {
+                interval.End = DateTime.Now;
+                interval.EndReason = reason;
+                m_store.UpdateInterval(interval);
+            }
             
             CurrentIntervalId = null;
         }
 
-        public Modifier AddModifier(DateTime date, TimeSpan time, string? comment = null)
+        public Modifier? AddModifier(DateTime date, TimeSpan time, string? comment = null)
         {
-            return m_store.CreateModifier(date, time, comment);
+            return m_store?.CreateModifier(date, time, comment);
         }
 
-        public Modifier AddModifier(TimeSpan time, string? comment = null)
+        public Modifier? AddModifier(TimeSpan time, string? comment = null)
         {
-            return m_store.CreateModifier(DateTime.Today, time, comment);
+            return m_store?.CreateModifier(DateTime.Today, time, comment);
         }
 
         public TimeSpan TotalTime
@@ -228,21 +243,10 @@ namespace NMTimeTracker
             }
         }
 
-        private DataStore m_store;
+        private DataStore? m_store;
         private System.Timers.Timer m_timer = new System.Timers.Timer();
 
         private DayModel m_today;
         private long? m_currentIntervalId;
-
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        
-        protected void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
     }
 }

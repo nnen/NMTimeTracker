@@ -49,6 +49,11 @@ namespace NMTimeTracker.Model
             var app = App.Current;
             var store = app.Store;
 
+            if (store == null)
+            {
+                throw new Exception("Data store is not initialized.");
+            }
+            
             if (m_dayCounter == 0)
             {
                 m_day = DateTime.Today;
