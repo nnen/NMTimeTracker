@@ -197,5 +197,10 @@ namespace NMTimeTracker
                 this.Topmost = false; 
             }
         }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            this.Show();
+        }
     }
 }
