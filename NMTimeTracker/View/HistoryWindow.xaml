@@ -32,6 +32,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Calendar VerticalAlignment="Top" Margin="8,8,8,0" SelectedDate="{Binding SelectedDate}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" DisplayDate="{Binding SelectedDate}" GotMouseCapture="Calendar_GotMouseCapture"/>
@@ -40,6 +42,10 @@
             <TextBlock TextWrapping="Wrap" Text="{Binding SelectedDay.Time, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
             <TextBlock TextWrapping="Wrap" Text="Week total" Margin="8,8,8,0" Grid.Row="3"/>
             <TextBlock TextWrapping="Wrap" Text="{Binding SelectedWeek.Time, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <TextBlock TextWrapping="Wrap" Text="Month total" Margin="8,8,8,0" Grid.Row="4"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedMonth.Time, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <TextBlock TextWrapping="Wrap" Text="Month expect." Margin="8,8,8,0" Grid.Row="5"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedMonth.ExpectedTime, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom"/>
         </Grid>
 
         <Grid Grid.Column="1">
