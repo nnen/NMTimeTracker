@@ -18,7 +18,7 @@ NMTimeTracker is essentially a software punch clock, meant to help with work-fro
 
 ## Changes
 
-### v0.4
+### v0.3
 
 * Implemented option to pause the timer when screen saver comes on. This is
   necessary, because Windows screen savers do not lock the session when they
