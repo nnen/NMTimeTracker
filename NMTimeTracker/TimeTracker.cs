@@ -29,6 +29,8 @@ namespace NMTimeTracker
         UserStart,
         [Description("Stopped by user")]
         UserStop,
+        [Description("Screensaver started")]
+        ScreensaverStart,
         
         [Description("Unexpected exit")]
         UnexpectedStop,
@@ -58,8 +60,15 @@ namespace NMTimeTracker
                     var interval = CurrentInterval;
                     if (interval != null)
                     {
-                        m_today.UpdateLastInterval(interval.Id, DateTime.Now);
-                        m_store.UpdateInterval(interval);
+                        if (SystemUtils.IsScreenSaverRunning())
+                        {
+                            StopTime(TimeTrackerEvents.ScreensaverStart);
+                        }
+                        else
+                        {
+                            m_today.UpdateLastInterval(interval.Id, DateTime.Now);
+                            m_store.UpdateInterval(interval);
+                        }
                     }
                 });
 

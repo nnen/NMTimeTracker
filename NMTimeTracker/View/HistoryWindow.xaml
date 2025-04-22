@@ -84,7 +84,9 @@
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Edit Modifier" Click="EditModifier_Click"/>
+                        <MenuItem Header="Edit Modifier..." Click="EditModifier_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Add Modifier..." Click="AddModifier_Click"/>
                         <MenuItem Header="Delete Modifier" Click="DeleteModifier_Click"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>

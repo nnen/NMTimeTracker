@@ -16,6 +16,7 @@ namespace NMTimeTracker
         private bool m_startOnLaunch = true;
         private bool m_stopOnLock = true;
         private bool m_startOnUnlock = true;
+        private bool m_stopOnScreenSaver = true;
         // private DayOfWeek m_firstDayOfWeek = DayOfWeek.Monday;
         private bool m_mainWindowAlwaysOnTop = false;
 
@@ -43,6 +44,15 @@ namespace NMTimeTracker
             set
             {
                 SetProperty(nameof(StartOnUnlock), ref m_startOnUnlock, value);
+            }
+        }
+
+        public bool StopOnScreenSaver
+        {
+            get => m_stopOnScreenSaver;
+            set
+            {
+                SetProperty(nameof(StopOnScreenSaver), ref m_stopOnScreenSaver, value);
             }
         }
 

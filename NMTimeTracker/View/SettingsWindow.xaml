@@ -36,6 +36,9 @@
                 <Label Content="Pause timer on lock" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding Settings.StopOnLock}" Margin="8,3,8,3"/>
 
+                <Label Content="Pause timer on screen saver" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Settings.StopOnScreenSaver}" Margin="8,3,8,3"/>
+
                 <Label Content="Unpause timer on unlock" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding Settings.StartOnUnlock}" Margin="8,3,8,3"/>
 

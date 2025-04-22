@@ -15,3 +15,14 @@ NMTimeTracker is essentially a software punch clock, meant to help with work-fro
 
 ![Screenshot of the application's main window](Docs/main_window.png)
 ![Screenshot of the application's history window](Docs/history_window.png)
+
+## Changes
+
+### v0.4
+
+* Implemented option to pause the timer when screen saver comes on. This is
+  necessary, because Windows screen savers do not lock the session when they
+  come on, they only lock it when the user tries to exit them.
+* Added "Add modifier..." item to the History window's context menu.
+* Added "+8 hours" and "+4 hours" buttons to the "New Modifier" and "Edit
+  Modifier" dialogs.
