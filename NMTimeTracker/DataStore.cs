@@ -415,6 +415,20 @@ namespace NMTimeTracker
             return new WeekModel(days);
         }
 
+        public MonthModel GetMonth(DateTime aMonthDay)
+        {
+            var firstDay = Utils.GetStartOfMonth(aMonthDay);
+            var currentDay = firstDay;
+            var days = new List<DayModel>();
+
+            while (currentDay.Month==firstDay.Month)
+            {
+                days.Add(GetDay(currentDay));
+                currentDay = currentDay.AddDays(1);
+            }
+
+            return new MonthModel(days);
+        }
 
         private static string? GetDatabaseDirectoryPath()
         {

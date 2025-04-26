@@ -106,6 +106,22 @@ namespace NMTimeTracker
             }
         }
 
+        private void AddModifier_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is HistoryViewModel viewModel)
+            {
+                var window = new NewModifierWindow();
+
+                if (window.DataContext is ModifierViewModel modVM)
+                {
+                    modVM.Date = viewModel.SelectedDate;
+                }
+
+                window.ShowDialog();
+            }
+            
+        }
+
         private void DeleteModifier_Click(object sender, RoutedEventArgs e)
         {
             DeleteSelectedModifiers();

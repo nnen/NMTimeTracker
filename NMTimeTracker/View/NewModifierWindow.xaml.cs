@@ -82,6 +82,22 @@ namespace NMTimeTracker.View
             }
         }
 
+        private void Add8HoursButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is Model.ModifierViewModel vm)
+            {
+                vm.Time += new TimeSpan(8, 0, 0);
+            }
+        }
+
+        private void Add4HoursButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is Model.ModifierViewModel vm)
+            {
+                vm.Time += new TimeSpan(4, 0, 0);
+            }
+        }
+
         private void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
             if (DataContext is Model.ModifierViewModel vm)

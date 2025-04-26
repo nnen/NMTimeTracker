@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using NMTimeTracker.Model;
 
@@ -14,6 +15,7 @@ namespace NMTimeTracker
         private DateTime m_selectedDate = DateTime.Today;
         private WeekModel m_selectedWeek;
         private DayModel m_selectedDay;
+        private MonthModel m_selectedMonth;
         private Interval? m_selectedInterval;
         private bool m_updating = false;
         
@@ -33,6 +35,12 @@ namespace NMTimeTracker
         {
             get => m_selectedWeek;
             set => SetProperty(nameof(SelectedWeek), ref m_selectedWeek, value);
+        }
+
+        public MonthModel SelectedMonth
+        {
+            get => m_selectedMonth;
+            set => SetProperty(nameof(SelectedMonth), ref m_selectedMonth, value);
         }
 
         public DayModel SelectedDay
@@ -63,6 +71,7 @@ namespace NMTimeTracker
             UpdateFromSelectedDate();
 
             Debug.Assert(m_selectedWeek != null);
+            Debug.Assert(m_selectedMonth != null);
             Debug.Assert(m_selectedDay != null);
         }
 
@@ -116,10 +125,7 @@ namespace NMTimeTracker
                     throw new Exception("Data store is not initialized.");
                 }
                 var selectedDate = SelectedDate;
-                if ((SelectedWeek == null) || !SelectedWeek.Contains(selectedDate))
-                {
-                    SelectedWeek = store.GetWeek(selectedDate, app.Settings.FirstDayOfWeek);
-                }
+                UpdateWeekAndMonth(store, selectedDate);
                 SelectedDay = store.GetDay(selectedDate);
             }
             finally 
@@ -143,16 +149,25 @@ namespace NMTimeTracker
                 var day = SelectedDay;
                 if (day != null)
                 {
-                    if ((SelectedWeek == null) || !SelectedWeek.Contains(day.Date))
-                    {
-                        SelectedWeek = store.GetWeek(day.Date, app.Settings.FirstDayOfWeek);
-                    }
+                    UpdateWeekAndMonth(store, day.Date);
                     SelectedDate = day.Date;
                 }
             }
             finally
             {
                 m_updating = false;
+            }
+        }
+    
+        private void UpdateWeekAndMonth(DataStore store, DateTime date)
+        {
+            if ((SelectedWeek == null) || !SelectedWeek.Contains(date))
+            {
+                SelectedWeek = store.GetWeek(date, App.Current.Settings.FirstDayOfWeek);
+            }
+            if ((SelectedMonth == null) || !SelectedMonth.Contains(date))
+            {
+                SelectedMonth = store.GetMonth(date);
             }
         }
     }

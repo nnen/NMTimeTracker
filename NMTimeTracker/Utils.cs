@@ -24,5 +24,15 @@ namespace NMTimeTracker
             int diff = (7 + (aWeekDay.DayOfWeek - startOfWeek)) % 7;
             return aWeekDay.AddDays(-1 * diff).Date;
         }
+
+        public static DateOnly GetStartOfMonth(DateOnly aMonthDay)
+        {
+            return new DateOnly(aMonthDay.Year, aMonthDay.Month, 1);
+        }
+
+        public static DateTime GetStartOfMonth(DateTime aMonthDay)
+        {
+            return new DateTime(aMonthDay.Year, aMonthDay.Month, 1);
+        }
     }
 }

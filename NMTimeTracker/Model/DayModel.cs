@@ -13,6 +13,13 @@ namespace NMTimeTracker.Model
         private TimeSpan? m_time;
 
         public DateTime Date { get; }
+        public bool IsPublicHoliday => false;
+        public bool IsWeekend => (Date.DayOfWeek == DayOfWeek.Sunday) || (Date.DayOfWeek == DayOfWeek.Saturday);
+        public bool IsBussinessDay
+        {
+            get => !IsPublicHoliday && !IsWeekend;
+        }
+        public TimeSpan ExpectedTime => IsBussinessDay ? new TimeSpan(8, 0, 0) : TimeSpan.Zero;
         public ReadOnlyObservableCollection<Interval> Intervals => m_roIntervals;
 
         public Interval? LastInterval

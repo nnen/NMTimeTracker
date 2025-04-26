@@ -27,6 +27,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -44,13 +45,17 @@
 
         <Label Content="Time" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2"/>
         <local:TimeSpanControl Grid.Column="1" VerticalAlignment="Center" Value="{Binding Time, Mode=TwoWay}" Grid.Row="2"/>
+        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
+            <Button x:Name="Add8Hours" Content="+8 hours" Margin="0,3,5,5" Height="Auto" Click="Add8HoursButton_Click" />
+            <Button x:Name="Add4Hours" Content="+4 hours" Margin="0,3,5,5" Height="Auto" Click="Add4HoursButton_Click" />
+        </StackPanel>
 
-        <Label Content="Comment" HorizontalAlignment="Right" Grid.Row="3" VerticalAlignment="Top"/>
-        <TextBox x:Name="CommentTextBox" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" Text="{Binding Comment, FallbackValue=Comment..., Mode=TwoWay}" Height="100"/>
+        <Label Content="Comment" HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Top"/>
+        <TextBox x:Name="CommentTextBox" Grid.Column="1" Grid.Row="4" TextWrapping="Wrap" Text="{Binding Comment, FallbackValue=Comment..., Mode=TwoWay}" Height="100"/>
 
-        <Label Grid.ColumnSpan="2" Content="{Binding Description, FallbackValue=[Description], Mode=OneWay}" Grid.Row="4" VerticalContentAlignment="Bottom" Margin="0,5,0,5" HorizontalContentAlignment="Right"/>
+        <Label Grid.ColumnSpan="2" Content="{Binding Description, FallbackValue=[Description], Mode=OneWay}" Grid.Row="5" VerticalContentAlignment="Bottom" Margin="0,5,0,5" HorizontalContentAlignment="Right"/>
 
-        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" >
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" >
             <Button x:Name="OkButton" Content="Add modifier" Click="OkButton_Click" Visibility="{Binding AddButtonVisiblity, Mode=OneWay}"/>
             <Button x:Name="ApplyButton" Content="Apply changes" Visibility="{Binding ApplyButtonVisibility, Mode=OneWay}" Click="ApplyButton_Click"/>
             <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click"/>
