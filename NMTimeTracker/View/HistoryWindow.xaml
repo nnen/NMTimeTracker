@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="History" Height="450" Width="800" IsVisibleChanged="WindowBase_IsVisibleChanged">
     <local:WindowBase.Resources>
+        <local:BusinessDaysTimeSpanConverter x:Key="BusinessDaysTimeSpanConverter"/>
         <View:EnumToStringConverter x:Key="EnumToStringConverter"/>
         <local:TimeOfDayConverter x:Key="TimeOfDayConverter"/>
         <local:DateConverter x:Key="DateConverter"/>
@@ -43,9 +44,9 @@
             <TextBlock TextWrapping="Wrap" Text="Week total" Margin="8,8,8,0" Grid.Row="3"/>
             <TextBlock TextWrapping="Wrap" Text="{Binding SelectedWeek.Time, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom"/>
             <TextBlock TextWrapping="Wrap" Text="Month total" Margin="8,8,8,0" Grid.Row="4"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedMonth.Time, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedMonth.Time, Converter={StaticResource BusinessDaysTimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom"/>
             <TextBlock TextWrapping="Wrap" Text="Month expect." Margin="8,8,8,0" Grid.Row="5"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedMonth.ExpectedTime, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedMonth.ExpectedTime, Converter={StaticResource BusinessDaysTimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom"/>
         </Grid>
 
         <Grid Grid.Column="1">

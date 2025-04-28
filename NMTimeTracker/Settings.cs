@@ -75,6 +75,9 @@ namespace NMTimeTracker
         }
 
 
+        public int HoursPerBusinessDay => 8;
+
+
         public static string? GetFilePath()
         { 
             var appData = App.GetAppDataDirectoryPath(true);

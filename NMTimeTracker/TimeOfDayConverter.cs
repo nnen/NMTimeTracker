@@ -129,4 +129,47 @@ namespace NMTimeTracker
             return TimeSpan.Zero;
         }
     }
+    
+    [ValueConversion(typeof(TimeSpan), typeof(string))]
+    public class BusinessDaysTimeSpanConverter : IValueConverter
+    {
+        private static Regex s_timeSpanRegex = new Regex(@"(?<days>\d+)d\s*(?<hours>\d+)h(\s*(?<minutes>\d+)m)?", RegexOptions.Compiled);
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            int hoursePerDay = App.Current.Settings.HoursPerBusinessDay;
+
+            TimeSpan span = (TimeSpan)value;
+            int totalHours = (int)Math.Floor(span.TotalHours);
+            int businessDays = totalHours / hoursePerDay;
+            int hours = totalHours % hoursePerDay;
+            //int minutes = span.Minutes;
+            return $"{businessDays}d {hours}h";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string strValue)
+            {
+                var m = s_timeSpanRegex.Match(strValue);
+                if (m.Success)
+                {
+                    int hoursePerDay = App.Current.Settings.HoursPerBusinessDay;
+
+                    int days = int.Parse(m.Groups["days"].Value);
+                    int hours = int.Parse(m.Groups["hours"].Value);
+                    string minutesStr = m.Groups["minutes"].Value;
+                    int minutes = minutesStr.Length > 0 ? int.Parse(minutesStr) : 0;
+                    return new TimeSpan(days * hoursePerDay + hours, minutes, 0);
+                }
+                
+                if (TimeSpan.TryParse(strValue, out TimeSpan result))
+                {
+                    return result;
+                }
+            }
+
+            return TimeSpan.Zero;
+        }
+    }
 }
