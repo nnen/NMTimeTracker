@@ -56,7 +56,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <local:DayList x:Name="dayList" Grid.Row="0" Days="{Binding SelectedWeek.Days, Mode=OneWay}" SelectedDay="{Binding SelectedDay, Mode=TwoWay}"/>
+            <local:DayList x:Name="dayList" Grid.Row="0" Days="{Binding SelectedDaysViewModel, Mode=OneWay, diag:PresentationTraceSources.TraceLevel=High}" SelectedDay="{Binding SelectedDayViewModel, Mode=TwoWay}" xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"/>
             <!-- <local:IntervalList x:Name="intervalList" Intervals="{Binding SelectedDay.Intervals, Mode=OneWay}" SelectedInterval="{Binding SelectedInterval, Mode=TwoWay}"/> -->
             <DataGrid x:Name="IntervalsDataGrid" AutoGenerateColumns="False" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding SelectedDay.Intervals, Mode=OneWay}" GridLinesVisibility="None" AlternatingRowBackground="#FFE2FFDF" PreviewKeyDown="IntervalsDataGrid_PreviewKeyDown">
                 <DataGrid.Columns>

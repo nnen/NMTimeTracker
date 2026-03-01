@@ -98,6 +98,42 @@ namespace NMTimeTracker.View
             }
         }
 
+        private void Sub8HoursButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is Model.ModifierViewModel vm)
+            {
+                vm.Time -= new TimeSpan(8, 0, 0);
+            }
+        }
+
+        private void Sub4HoursButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is Model.ModifierViewModel vm)
+            {
+                vm.Time -= new TimeSpan(4, 0, 0);
+            }
+        }
+
+        private void PresetHoliday_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is Model.ModifierViewModel vm)
+            {
+                vm.Kind = ModifierKinds.ExpectedTime;
+                vm.Time = new TimeSpan(-8, 0, 0);
+                vm.Comment = "Holiday";
+            }
+        }
+
+        private void PresetVacation_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is Model.ModifierViewModel vm)
+            {
+                vm.Kind = ModifierKinds.WorkedTime;
+                vm.Time = new TimeSpan(-8, 0, 0);
+                vm.Comment = "Vacation";
+            }
+        }
+
         private void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
             if (DataContext is Model.ModifierViewModel vm)

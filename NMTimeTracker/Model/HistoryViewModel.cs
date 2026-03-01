@@ -18,6 +18,9 @@ namespace NMTimeTracker
         private MonthModel m_selectedMonth;
         private Interval? m_selectedInterval;
         private bool m_updating = false;
+
+        private DayViewModel? m_selectedDayViewModel;
+        private List<DayViewModel> m_selectedDays;
         
         public DateTime SelectedDate
         {
@@ -50,8 +53,49 @@ namespace NMTimeTracker
             {
                 if (SetProperty(nameof(SelectedDay), ref m_selectedDay, value))
                 {
+                    m_selectedDayViewModel = null;
+                    NotifyPropertyChanged(nameof(SelectedDayViewModel));
+
                     UpdateFromSelectedDay();
                 }
+            }
+        }
+
+        public DayViewModel SelectedDayViewModel
+        {
+            get
+            {
+                if (m_selectedDayViewModel == null)
+                {
+                    m_selectedDayViewModel = new DayViewModel(m_selectedDay);
+                }
+                return m_selectedDayViewModel;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    SelectedDay = value.Model;
+                }
+            }
+        }
+
+        public IEnumerable<DayViewModel> SelectedDaysViewModel
+        {
+            get
+            {
+                if (m_selectedDays == null)
+                {
+                    m_selectedDays = new List<DayViewModel>();
+                }
+                if ((m_selectedDays.Count == 0) && (m_selectedWeek != null))
+                {
+                    foreach (var day in m_selectedWeek.Days)
+                    {
+                        m_selectedDays.Add(new DayViewModel(day));
+                    }
+                }
+                return m_selectedDays;
             }
         }
 
@@ -127,6 +171,10 @@ namespace NMTimeTracker
                 var selectedDate = SelectedDate;
                 UpdateWeekAndMonth(store, selectedDate);
                 SelectedDay = store.GetDay(selectedDate);
+
+                //m_selectedDays?.Clear();
+                m_selectedDays = null;
+                NotifyPropertyChanged(nameof(SelectedDaysViewModel));
             }
             finally 
             { 
@@ -152,6 +200,10 @@ namespace NMTimeTracker
                     UpdateWeekAndMonth(store, day.Date);
                     SelectedDate = day.Date;
                 }
+
+                //m_selectedDays?.Clear();
+                m_selectedDays = null;
+                NotifyPropertyChanged(nameof(SelectedDaysViewModel));
             }
             finally
             {
