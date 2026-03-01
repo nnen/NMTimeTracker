@@ -119,7 +119,7 @@ namespace NMTimeTracker.View
             if (DataContext is Model.ModifierViewModel vm)
             {
                 vm.Kind = ModifierKinds.ExpectedTime;
-                vm.Time = new TimeSpan(-8, 0, 0);
+                vm.Time = new TimeSpan(-App.Current.Settings.HoursPerBusinessDay, 0, 0);
                 vm.Comment = "Holiday";
             }
         }
@@ -128,9 +128,19 @@ namespace NMTimeTracker.View
         {
             if (DataContext is Model.ModifierViewModel vm)
             {
-                vm.Kind = ModifierKinds.WorkedTime;
-                vm.Time = new TimeSpan(-8, 0, 0);
+                vm.Kind = ModifierKinds.ExpectedTime;
+                vm.Time = new TimeSpan(-App.Current.Settings.HoursPerBusinessDay, 0, 0);
                 vm.Comment = "Vacation";
+            }
+        }
+
+        private void PresetPaidVacation_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is Model.ModifierViewModel vm)
+            {
+                vm.Kind = ModifierKinds.WorkedTime;
+                vm.Time = new TimeSpan(App.Current.Settings.HoursPerBusinessDay, 0, 0);
+                vm.Comment = "Paid vacation";
             }
         }
 

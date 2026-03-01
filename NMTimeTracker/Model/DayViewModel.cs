@@ -37,5 +37,19 @@ namespace NMTimeTracker
                 NotifyPropertyChanged(nameof(ModifierIndicatorVisibility));
             };
         }
-    }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is DayViewModel other)
+            {
+                return object.Equals(Model, other.Model);
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Model.GetHashCode() ^ 0x45ab5;
+        }
+  }
 }

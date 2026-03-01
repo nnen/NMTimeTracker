@@ -49,6 +49,7 @@
     <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
       <Button x:Name="PresetHoliday" Content="Holiday" Margin="0,3,5,5" Height="Auto" Click="PresetHoliday_Click" />
       <Button x:Name="PresetVacation" Content="Vacation" Margin="0,3,5,5" Height="Auto" Click="PresetVacation_Click" />
+      <Button x:Name="PresetPaidVacation" Content="Paid Vacation" Margin="0,3,5,5" Height="Auto" Click="PresetPaidVacation_Click" />
     </StackPanel>
 
     <Label Content="Kind" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3"/>
