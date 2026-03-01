@@ -23,22 +23,22 @@ namespace NMTimeTracker
     public partial class DayList : System.Windows.Controls.UserControl
     {
         public static readonly DependencyProperty DaysProperty =
-            DependencyProperty.Register(nameof(Days), typeof(IEnumerable<DayModel>), typeof(DayList), new PropertyMetadata());
+            DependencyProperty.Register(nameof(Days), typeof(IEnumerable<DayViewModel>), typeof(DayList), new PropertyMetadata());
 
         public static readonly DependencyProperty SelectedDayProperty =
-            DependencyProperty.Register(nameof(SelectedDay), typeof(DayModel), typeof(DayList), new PropertyMetadata());
+            DependencyProperty.Register(nameof(SelectedDay), typeof(DayViewModel), typeof(DayList), new PropertyMetadata());
 
         [System.ComponentModel.Bindable(true)]
-        public IEnumerable<DayModel> Days
+        public IEnumerable<DayViewModel> Days
         {
-            get { return (IEnumerable<DayModel>)GetValue(DaysProperty); }
+            get { return (IEnumerable<DayViewModel>)GetValue(DaysProperty); }
             set { SetValue(DaysProperty, value); }
         }
 
         [System.ComponentModel.Bindable(true)]
-        public DayModel SelectedDay
+        public DayViewModel SelectedDay
         {
-            get { return (DayModel)GetValue(SelectedDayProperty); }
+            get { return (DayViewModel)GetValue(SelectedDayProperty); }
             set { SetValue(SelectedDayProperty, value); }
         }
 

@@ -13,6 +13,7 @@ namespace NMTimeTracker.Model
     {
         private Modifier? m_modifier = null;
         private DateTime m_date = DateTime.Today;
+        private ModifierKinds m_kind = ModifierKinds.WorkedTime;
         private TimeSpan m_time = TimeSpan.Zero;
         private string m_comment = string.Empty;
 
@@ -37,6 +38,7 @@ namespace NMTimeTracker.Model
                     if (value != null)
                     {
                         Date = value.Date;
+                        Kind = value.Kind;
                         Time = value.Time;
                         Comment = value.Comment ?? string.Empty;
                     }
@@ -51,6 +53,29 @@ namespace NMTimeTracker.Model
         {
             get => m_date;
             set => SetProperty(nameof(Date), ref m_date, value);
+        }
+
+        public ModifierKinds Kind
+        {
+            get => m_kind;
+            set
+            {
+                SetProperty(nameof(Kind), ref m_kind, value);
+                NotifyPropertyChanged(nameof(IsWorkedTime));
+                NotifyPropertyChanged(nameof(IsExpectedTime));
+            }
+        }
+
+        public bool IsWorkedTime
+        {
+            get => Kind == ModifierKinds.WorkedTime;
+            set => Kind = value ? ModifierKinds.WorkedTime : ModifierKinds.ExpectedTime;
+        }
+
+        public bool IsExpectedTime
+        {
+            get => Kind == ModifierKinds.ExpectedTime;
+            set => Kind = value ? ModifierKinds.ExpectedTime : ModifierKinds.WorkedTime;
         }
 
         public TimeSpan Time 
@@ -90,7 +115,7 @@ namespace NMTimeTracker.Model
         public void AddModifier()
         {
             var app = App.Current;
-            app.Tracker?.AddModifier(Date, Time, Comment);
+            app.Tracker?.AddModifier(Date, Kind, Time, Comment);
         }
 
         public void ApplyChanges()
@@ -101,6 +126,7 @@ namespace NMTimeTracker.Model
                 var store = app.Store;
 
                 m_modifier.Date = Date;
+                m_modifier.Kind = Kind;
                 m_modifier.Time = Time;
                 m_modifier.Comment = Comment;
                 

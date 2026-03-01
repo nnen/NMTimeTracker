@@ -26,6 +26,7 @@
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -33,6 +34,7 @@
                         <TextBlock Text="{Binding Date, Converter={StaticResource DayOfWeekConverter}}" Grid.Row="0" Grid.Column="0" TextAlignment="Right" FontSize="18" />
                         <TextBlock Text="{Binding Date, Converter={StaticResource ShortDateConverter}}" Grid.Row="1" Grid.Column="0"  TextAlignment="Right" FontSize="12" />
                         <TextBlock Text="{Binding Time, Converter={StaticResource TimeSpanConverter}}" Grid.Row="2" TextAlignment="Right" FontSize="14" />
+                        <Rectangle Fill="#FF2371EF" Grid.Row="3" Height="5" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

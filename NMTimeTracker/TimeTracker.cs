@@ -225,14 +225,14 @@ namespace NMTimeTracker
             CurrentIntervalId = null;
         }
 
-        public Modifier? AddModifier(DateTime date, TimeSpan time, string? comment = null)
+        public Modifier? AddModifier(DateTime date, ModifierKinds kind, TimeSpan time, string? comment = null)
         {
-            return m_store?.CreateModifier(date, time, comment);
+            return m_store?.CreateModifier(date, time, comment, kind);
         }
 
-        public Modifier? AddModifier(TimeSpan time, string? comment = null)
+        public Modifier? AddModifier(ModifierKinds kind, TimeSpan time, string? comment = null)
         {
-            return m_store?.CreateModifier(DateTime.Today, time, comment);
+            return m_store?.CreateModifier(DateTime.Today, time, comment, kind);
         }
 
         public TimeSpan TotalTime

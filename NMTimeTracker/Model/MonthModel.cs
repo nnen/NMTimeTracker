@@ -58,7 +58,6 @@ namespace NMTimeTracker.Model
             m_expectedTime = null;
             NotifyPropertyChanged(nameof(Time));
             NotifyPropertyChanged(nameof(ExpectedTime));
-
         }
 
 

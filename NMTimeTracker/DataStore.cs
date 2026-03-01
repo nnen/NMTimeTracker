@@ -46,6 +46,7 @@ namespace NMTimeTracker
             cmd.CommandText = $"CREATE TABLE IF NOT EXISTS {ModifiersTableName} (" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "Date DATE, " +
+                "Kind INTEGER, " +
                 "Time INTEGER, " +
                 "Comment TEXT" +
                 ")";
@@ -168,6 +169,7 @@ namespace NMTimeTracker
         {
             var id = (long)reader["Id"];
             var date = (DateTime)reader["Date"];
+            var kind = (ModifierKinds)(long)reader["Kind"];
             var timeSeconds = (long)reader["Time"];
             var comment = FromSQLite<string?>(reader["Comment"]);
 
@@ -175,21 +177,23 @@ namespace NMTimeTracker
             { 
                 Id = id,
                 Date = date,
+                Kind = kind,
                 Time = TimeSpan.FromSeconds(timeSeconds),
                 Comment = comment
             };
         }
 
-        public Modifier CreateModifier(DateTime date, TimeSpan time, string? comment = null)
+        public Modifier CreateModifier(DateTime date, TimeSpan time, string? comment = null, ModifierKinds kind = ModifierKinds.WorkedTime)
         {
-            var sql = $"INSERT INTO {ModifiersTableName}(Date, Time, Comment) VALUES (@date, @time, @comment);";
+            var sql = $"INSERT INTO {ModifiersTableName}(Date, Kind, Time, Comment) VALUES (@date, @kind, @time, @comment);";
             var cmd = new SQLiteCommand(sql, m_connection);
             cmd.Parameters.AddWithValue("@date", date.ToString("yyyy-MM-dd"));
+            cmd.Parameters.AddWithValue("@kind", (int)kind);
             cmd.Parameters.AddWithValue("@time", time.TotalSeconds);
             cmd.Parameters.AddWithValue("@comment", comment);
             cmd.ExecuteNonQuery();
             var id = m_connection.LastInsertRowId;
-            var modifier = new Modifier(id, date.Date, time, comment);
+            var modifier = new Modifier(id, date.Date, kind, time, comment);
             var day = GetCachedDay(date);
             if (day != null) 
             {
@@ -210,6 +214,7 @@ namespace NMTimeTracker
             {
                 Id = modifier.Id,
                 Date = modifier.Date,
+                Kind = modifier.Kind,
                 Time = modifier.Time,
                 Comment = modifier.Comment,
             };
@@ -241,9 +246,10 @@ namespace NMTimeTracker
                     return false;
                 }
 
-                var sql = $"UPDATE {ModifiersTableName} SET Date=@date, Time=@time, Comment=@comment WHERE Id=@id";
+                var sql = $"UPDATE {ModifiersTableName} SET Date=@date, Kind=@kind, Time=@time, Comment=@comment WHERE Id=@id";
                 var cmd = new SQLiteCommand(sql, m_connection);
                 cmd.Parameters.AddWithValue("@date", data.Date.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("@kind", (int)data.Kind);
                 cmd.Parameters.AddWithValue("@time", data.Time.TotalSeconds);
                 cmd.Parameters.AddWithValue("@comment", data.Comment);
                 cmd.Parameters.AddWithValue("@id", data.Id);

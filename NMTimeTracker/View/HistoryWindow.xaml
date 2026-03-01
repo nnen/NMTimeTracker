@@ -81,6 +81,7 @@
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Modifier" Binding="{Binding Time}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Kind" Binding="{Binding Kind}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" IsReadOnly="True" />
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>

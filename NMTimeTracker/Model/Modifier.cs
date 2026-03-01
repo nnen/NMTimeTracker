@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace NMTimeTracker.Model
 {
+    public enum ModifierKinds
+    {
+        [Description("Worked time")]
+        WorkedTime,
+        [Description("Expected time")]
+        ExpectedTime,
+    }
+
     public struct ModifierData
     {
         public long Id;
         public DateTime Date;
+        public ModifierKinds Kind;
         public TimeSpan Time;
         public string? Comment;
     }
@@ -24,6 +34,12 @@ namespace NMTimeTracker.Model
         public DateTime Date { 
             get => m_data.Date; 
             set => SetProperty(nameof(Date), ref m_data.Date, value);
+        }
+
+        public ModifierKinds Kind
+        {
+            get => m_data.Kind;
+            set => SetProperty(nameof(Kind), ref m_data.Kind, value);
         }
 
         public TimeSpan Time 
@@ -44,10 +60,11 @@ namespace NMTimeTracker.Model
             m_data = data;
         }
 
-        public Modifier(long id, DateTime date, TimeSpan time, string? comment)
+        public Modifier(long id, DateTime date, ModifierKinds kind, TimeSpan time, string? comment)
         {
             m_data.Id = id;
             m_data.Date = date;
+            m_data.Kind = kind;
             m_data.Time = time;
             m_data.Comment = comment;
         }

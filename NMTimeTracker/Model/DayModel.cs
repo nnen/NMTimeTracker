@@ -11,6 +11,7 @@ namespace NMTimeTracker.Model
         private ReadOnlyObservableCollection<Modifier>? m_roModifiers;
         
         private TimeSpan? m_time;
+        private TimeSpan? m_expectedTime;
 
         public DateTime Date { get; }
         public bool IsPublicHoliday => false;
@@ -19,7 +20,21 @@ namespace NMTimeTracker.Model
         {
             get => !IsPublicHoliday && !IsWeekend;
         }
-        public TimeSpan ExpectedTime => IsBussinessDay ? new TimeSpan(8, 0, 0) : TimeSpan.Zero;
+        public TimeSpan ExpectedTime
+        {
+            get
+            {
+                if (!m_expectedTime.HasValue)
+                {
+                    UpdateTime();
+                }
+                return m_expectedTime.Value;
+            }
+        }
+        public bool IsDayOff
+        {
+            get => (ExpectedTime.TotalHours > 0);
+        }
         public ReadOnlyObservableCollection<Interval> Intervals => m_roIntervals;
 
         public Interval? LastInterval
@@ -46,6 +61,8 @@ namespace NMTimeTracker.Model
             }
         }
 
+        public bool HasModifiers => (m_modifiers.Count > 0);
+
 
         public TimeSpan Time
         {
@@ -53,27 +70,44 @@ namespace NMTimeTracker.Model
             {
                 if (!m_time.HasValue)
                 {
-                    var time = TimeSpan.Zero;
-                    var dayStart = Date;
-                    var dayEnd = dayStart.AddDays(1);
-                    foreach (var interval in Intervals)
-                    {
-                        time += interval.GetOverlap(dayStart, dayEnd);
-                    }
-                    foreach (var modifier in m_modifiers)
-                    {
-                        time += modifier.Time;
-                    }
-                    m_time = time;
+                    UpdateTime();
                 }
                 return m_time.Value;
             }
         }
 
+        private void UpdateTime()
+        {
+            var time = TimeSpan.Zero;
+            var expectedTime = IsBussinessDay ? new TimeSpan(App.Current.Settings.HoursPerBusinessDay, 0, 0) : TimeSpan.Zero;
+            var dayStart = Date;
+            var dayEnd = dayStart.AddDays(1);
+            foreach (var interval in Intervals)
+            {
+                time += interval.GetOverlap(dayStart, dayEnd);
+            }
+            foreach (var modifier in m_modifiers)
+            {
+                if (modifier.Kind == ModifierKinds.ExpectedTime)
+                {
+                    expectedTime += modifier.Time;
+                }
+                else
+                {
+                    time += modifier.Time;
+                }
+            }
+            m_time = time;
+            m_expectedTime = expectedTime;
+        }
+
         public void InvalidateTime()
         {
             m_time = null;
+            m_expectedTime = null;
+
             NotifyPropertyChanged(nameof(Time));
+            NotifyPropertyChanged(nameof(ExpectedTime));
         }
 
 
