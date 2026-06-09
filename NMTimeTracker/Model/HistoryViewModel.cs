@@ -21,6 +21,11 @@ namespace NMTimeTracker
 
         private DayViewModel? m_selectedDayViewModel;
         private List<DayViewModel> m_selectedDays;
+
+        private DateTime m_rangeStartDate = Utils.GetStartOfMonth(DateTime.Today);
+        private DateTime m_rangeEndDate = DateTime.Today;
+        private TimeSpan? m_rangeTime;
+        private TimeSpan? m_rangeExpectedTime;
         
         public DateTime SelectedDate
         {
@@ -105,7 +110,45 @@ namespace NMTimeTracker
             set => SetProperty(nameof(SelectedInterval), ref m_selectedInterval, value);
         }
 
-        public ICommand RemoveSelectedIntervalCommand { get; } 
+        public DateTime RangeStartDate
+        {
+            get => m_rangeStartDate;
+            set
+            {
+                if (SetProperty(nameof(RangeStartDate), ref m_rangeStartDate, value))
+                    InvalidateRangeTime();
+            }
+        }
+
+        public DateTime RangeEndDate
+        {
+            get => m_rangeEndDate;
+            set
+            {
+                if (SetProperty(nameof(RangeEndDate), ref m_rangeEndDate, value))
+                    InvalidateRangeTime();
+            }
+        }
+
+        public TimeSpan RangeTime
+        {
+            get
+            {
+                if (!m_rangeTime.HasValue) UpdateRangeTime();
+                return m_rangeTime!.Value;
+            }
+        }
+
+        public TimeSpan RangeExpectedTime
+        {
+            get
+            {
+                if (!m_rangeExpectedTime.HasValue) UpdateRangeTime();
+                return m_rangeExpectedTime!.Value;
+            }
+        }
+
+        public ICommand RemoveSelectedIntervalCommand { get; }
 
 
         public HistoryViewModel()
@@ -221,6 +264,45 @@ namespace NMTimeTracker
             {
                 SelectedMonth = store.GetMonth(date);
             }
+        }
+
+        private void UpdateRangeTime()
+        {
+            var store = App.Current.Store;
+            if (store == null)
+            {
+                m_rangeTime = TimeSpan.Zero;
+                m_rangeExpectedTime = TimeSpan.Zero;
+                return;
+            }
+
+            var time = TimeSpan.Zero;
+            var expectedTime = TimeSpan.Zero;
+            var start = m_rangeStartDate.Date;
+            var end = m_rangeEndDate.Date;
+
+            if (start <= end)
+            {
+                var current = start;
+                while (current <= end)
+                {
+                    var day = store.GetDay(current);
+                    time += day.Time;
+                    expectedTime += day.ExpectedTime;
+                    current = current.AddDays(1);
+                }
+            }
+
+            m_rangeTime = time;
+            m_rangeExpectedTime = expectedTime;
+        }
+
+        private void InvalidateRangeTime()
+        {
+            m_rangeTime = null;
+            m_rangeExpectedTime = null;
+            NotifyPropertyChanged(nameof(RangeTime));
+            NotifyPropertyChanged(nameof(RangeExpectedTime));
         }
     }
 }

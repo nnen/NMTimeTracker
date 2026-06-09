@@ -35,6 +35,13 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Calendar VerticalAlignment="Top" Margin="8,8,8,0" SelectedDate="{Binding SelectedDate}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" DisplayDate="{Binding SelectedDate}" GotMouseCapture="Calendar_GotMouseCapture"/>
@@ -47,6 +54,15 @@
             <TextBlock TextWrapping="Wrap" Text="{Binding SelectedMonth.Time, Converter={StaticResource BusinessDaysTimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom"/>
             <TextBlock TextWrapping="Wrap" Text="Month expect." Margin="8,8,8,0" Grid.Row="5"/>
             <TextBlock TextWrapping="Wrap" Text="{Binding SelectedMonth.ExpectedTime, Converter={StaticResource BusinessDaysTimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <Separator Margin="8,8,8,0" Grid.Row="6" Grid.ColumnSpan="2"/>
+            <TextBlock TextWrapping="Wrap" Text="From" Margin="8,4,8,0" Grid.Row="7" Grid.ColumnSpan="2"/>
+            <DatePicker SelectedDate="{Binding RangeStartDate}" Margin="8,2,8,0" Grid.Row="8" Grid.ColumnSpan="2"/>
+            <TextBlock TextWrapping="Wrap" Text="To" Margin="8,8,8,0" Grid.Row="9" Grid.ColumnSpan="2"/>
+            <DatePicker SelectedDate="{Binding RangeEndDate}" Margin="8,2,8,0" Grid.Row="10" Grid.ColumnSpan="2"/>
+            <TextBlock TextWrapping="Wrap" Text="Range worked" Margin="8,8,8,0" Grid.Row="11"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding RangeTime, Converter={StaticResource BusinessDaysTimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="11" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <TextBlock TextWrapping="Wrap" Text="Range expect." Margin="8,4,8,8" Grid.Row="12"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding RangeExpectedTime, Converter={StaticResource BusinessDaysTimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,8" HorizontalAlignment="Right" Grid.Row="12" Grid.Column="1" VerticalAlignment="Bottom"/>
         </Grid>
 
         <Grid Grid.Column="1">
