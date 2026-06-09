@@ -88,7 +88,43 @@ namespace NMTimeTracker
             };
 
             var contextMenu = new ContextMenuStrip();
-            contextMenu.Items.Add("Exit").Click += (sender, e) => {
+
+            var pauseResumeItem = (ToolStripMenuItem)contextMenu.Items.Add("Pause");
+            contextMenu.Opening += (sender, e) =>
+            {
+                pauseResumeItem.Text = (Tracker?.IsTimeRunning == true) ? "Pause" : "Resume";
+            };
+            pauseResumeItem.Click += (sender, e) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    if (Tracker?.IsTimeRunning == true)
+                        Tracker.StopTime(TimeTrackerEvents.UserStop);
+                    else
+                        Tracker?.StartTime(TimeTrackerEvents.UserStart);
+                });
+            };
+
+            contextMenu.Items.Add("Add Modifier...").Click += (sender, e) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    var window = new NewModifierWindow();
+                    window.ShowDialog();
+                });
+            };
+
+            contextMenu.Items.Add("Show history...").Click += (sender, e) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    ShowHistoryWindow();
+                });
+            };
+
+            contextMenu.Items.Add(new ToolStripSeparator());
+            contextMenu.Items.Add("Exit").Click += (sender, e) =>
+            {
                 System.Windows.Application.Current.Shutdown();
             };
             m_notifyIcon.ContextMenuStrip = contextMenu;
