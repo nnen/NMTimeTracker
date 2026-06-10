@@ -68,13 +68,18 @@
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="Auto" />
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <local:DayList x:Name="dayList" Grid.Row="0" Days="{Binding SelectedDaysViewModel, Mode=OneWay, diag:PresentationTraceSources.TraceLevel=High}" SelectedDay="{Binding SelectedDayViewModel, Mode=TwoWay}" xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"/>
             <!-- <local:IntervalList x:Name="intervalList" Intervals="{Binding SelectedDay.Intervals, Mode=OneWay}" SelectedInterval="{Binding SelectedInterval, Mode=TwoWay}"/> -->
-            <DataGrid x:Name="IntervalsDataGrid" AutoGenerateColumns="False" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding SelectedDay.Intervals, Mode=OneWay}" GridLinesVisibility="None" AlternatingRowBackground="#FFE2FFDF" PreviewKeyDown="IntervalsDataGrid_PreviewKeyDown">
+            <View:DayTimelineControl Grid.Row="1" Height="24" Margin="0,2,0,2"
+                Intervals="{Binding SelectedDay.Intervals, Mode=OneWay}"
+                Date="{Binding SelectedDate, Mode=OneWay}"
+                SelectedInterval="{Binding SelectedInterval, Mode=TwoWay}"/>
+            <DataGrid x:Name="IntervalsDataGrid" AutoGenerateColumns="False" Grid.Row="2" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding SelectedDay.Intervals, Mode=OneWay}" SelectedItem="{Binding SelectedInterval, Mode=TwoWay}" GridLinesVisibility="None" AlternatingRowBackground="#FFE2FFDF" PreviewKeyDown="IntervalsDataGrid_PreviewKeyDown" SelectionChanged="IntervalsDataGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Start" Binding="{Binding StartTimeOfDay}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Start Reason" Binding="{Binding StartReason, Converter={StaticResource EnumToStringConverter}}" IsReadOnly="True" />
@@ -88,8 +93,8 @@
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>
-            <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="5"/>
-            <DataGrid x:Name="ModifiersDataGrid" AutoGenerateColumns="False" Grid.Row="3" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding SelectedDay.Modifiers, Mode=OneWay}" GridLinesVisibility="None" HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" AlternatingRowBackground="#FFE2FFDF" PreviewKeyDown="ModifiersDataGrid_PreviewKeyDown" MouseDoubleClick="ModifiersDataGrid_MouseDoubleClick">
+            <GridSplitter Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="5"/>
+            <DataGrid x:Name="ModifiersDataGrid" AutoGenerateColumns="False" Grid.Row="4" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding SelectedDay.Modifiers, Mode=OneWay}" GridLinesVisibility="None" HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" AlternatingRowBackground="#FFE2FFDF" PreviewKeyDown="ModifiersDataGrid_PreviewKeyDown" MouseDoubleClick="ModifiersDataGrid_MouseDoubleClick">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridRow}">
                         <EventSetter Event="Control.MouseDoubleClick" Handler="ModifiersDataGrid_MouseDoubleClick" />

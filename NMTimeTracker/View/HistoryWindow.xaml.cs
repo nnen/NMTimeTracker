@@ -127,6 +127,12 @@ namespace NMTimeTracker
             DeleteSelectedModifiers();
         }
 
+        private void IntervalsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IntervalsDataGrid.SelectedItem != null)
+                IntervalsDataGrid.ScrollIntoView(IntervalsDataGrid.SelectedItem);
+        }
+
         private void IntervalsDataGrid_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Delete)
