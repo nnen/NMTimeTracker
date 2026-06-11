@@ -182,23 +182,41 @@ namespace NMTimeTracker
     public class DateToWorkDayBackgroundConverter : IValueConverter
     {
         private static readonly SolidColorBrush s_nonWorkBrush;
+        private static readonly SolidColorBrush s_modifierBrush;
+        private static readonly SolidColorBrush s_workBrush;
 
         static DateToWorkDayBackgroundConverter()
         {
             s_nonWorkBrush = new SolidColorBrush(Color.FromRgb(220, 220, 220));
             s_nonWorkBrush.Freeze();
+
+            s_modifierBrush = new SolidColorBrush(Color.FromRgb(220, 220, 255));
+            s_modifierBrush.Freeze();
+
+            s_workBrush = new SolidColorBrush(Color.FromRgb(220, 255, 220));
+            s_workBrush.Freeze();
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is DateTime date)
             {
-                if (date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday)
-                    return s_nonWorkBrush;
-
-                var cachedDay = App.Current.Store?.GetCachedDay(date);
-                if (cachedDay != null && cachedDay.ExpectedTime == TimeSpan.Zero)
-                    return s_nonWorkBrush;
+                var cachedDay = App.Current?.Store?.GetCachedDay(date);
+                if (cachedDay != null)
+                {
+                    if (cachedDay.ExpectedTime == TimeSpan.Zero)
+                    {
+                        return s_nonWorkBrush;
+                    }
+                    else if ((date != DateTime.Today) && (cachedDay.Time > TimeSpan.Zero))
+                    {
+                        return s_workBrush;
+                    }
+                    else if (cachedDay.HasModifiers)
+                    {
+                        return s_modifierBrush;
+                    }
+                }
             }
             return Brushes.Transparent;
         }

@@ -13,9 +13,9 @@ namespace NMTimeTracker
         );
 
 
-        new public static App Current
+        new public static App? Current
         {
-            get => (App)System.Windows.Application.Current;
+            get => System.Windows.Application.Current as App;
         }
 
         public Settings Settings { get; } = Settings.Load();

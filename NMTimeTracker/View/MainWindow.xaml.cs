@@ -4,6 +4,8 @@ using System.DirectoryServices;
 using System.Media;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 
 namespace NMTimeTracker
 {
@@ -54,6 +56,8 @@ namespace NMTimeTracker
 
 
         private NotifyIcon m_notifyIcon;
+        private System.Drawing.Icon m_iconNormal = SystemIcons.Application;
+        private System.Drawing.Icon m_iconRunning = SystemIcons.Application;
 
 
         public MainWindow()
@@ -62,15 +66,19 @@ namespace NMTimeTracker
 
             DataContext = this;
 
-            System.Drawing.Icon icon = SystemIcons.Application;
-            var iconStream = System.Windows.Application.GetResourceStream(new Uri("AppIcon.ico", UriKind.Relative));
-            if (iconStream != null)
-            {
-                icon = new System.Drawing.Icon(iconStream.Stream);
-            }
+            var normalStream = System.Windows.Application.GetResourceStream(new Uri("AppIcon.ico", UriKind.Relative));
+            if (normalStream != null)
+                m_iconNormal = new System.Drawing.Icon(normalStream.Stream);
+
+            var runningStream = System.Windows.Application.GetResourceStream(new Uri("AppIconRunning.ico", UriKind.Relative));
+            if (runningStream != null)
+                m_iconRunning = new System.Drawing.Icon(runningStream.Stream);
 
             m_notifyIcon = new NotifyIcon();
-            m_notifyIcon.Icon = icon;
+            m_notifyIcon.Icon = m_iconNormal;
+
+            if (Tracker != null)
+                Tracker.PropertyChanged += Tracker_PropertyChanged;
             m_notifyIcon.Text = Title;
             m_notifyIcon.Visible = true;
             m_notifyIcon.DoubleClick += (sender, e) =>
@@ -133,6 +141,8 @@ namespace NMTimeTracker
             m_timer.AutoReset = true;
             m_timer.Enabled = true;
             m_timer.Elapsed += M_timer_Elapsed;
+
+            UpdateIcons();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -172,6 +182,22 @@ namespace NMTimeTracker
         private void M_timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
             ForceUpdateTimeText();
+        }
+
+        private void Tracker_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(TimeTracker.IsTimeRunning))
+                Dispatcher.InvokeAsync(UpdateIcons);
+        }
+
+        private void UpdateIcons()
+        {
+            var icon = (Tracker?.IsTimeRunning == true) ? m_iconRunning : m_iconNormal;
+            m_notifyIcon.Icon = icon;
+            Icon = Imaging.CreateBitmapSourceFromHIcon(
+                icon.Handle,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions());
         }
 
         private void Button_Start(object sender, RoutedEventArgs e)
