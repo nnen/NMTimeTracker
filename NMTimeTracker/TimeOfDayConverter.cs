@@ -7,6 +7,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
+using Brush = System.Windows.Media.Brush;
+using Brushes = System.Windows.Media.Brushes;
+using Color = System.Windows.Media.Color;
 
 namespace NMTimeTracker
 {
@@ -171,5 +175,35 @@ namespace NMTimeTracker
 
             return TimeSpan.Zero;
         }
+    }
+
+
+    [ValueConversion(typeof(DateTime), typeof(Brush))]
+    public class DateToWorkDayBackgroundConverter : IValueConverter
+    {
+        private static readonly SolidColorBrush s_nonWorkBrush;
+
+        static DateToWorkDayBackgroundConverter()
+        {
+            s_nonWorkBrush = new SolidColorBrush(Color.FromRgb(220, 220, 220));
+            s_nonWorkBrush.Freeze();
+        }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is DateTime date)
+            {
+                if (date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday)
+                    return s_nonWorkBrush;
+
+                var cachedDay = App.Current.Store?.GetCachedDay(date);
+                if (cachedDay != null && cachedDay.ExpectedTime == TimeSpan.Zero)
+                    return s_nonWorkBrush;
+            }
+            return Brushes.Transparent;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
     }
 }

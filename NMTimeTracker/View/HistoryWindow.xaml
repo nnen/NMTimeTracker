@@ -13,6 +13,7 @@
         <local:TimeOfDayConverter x:Key="TimeOfDayConverter"/>
         <local:DateConverter x:Key="DateConverter"/>
         <local:TimeSpanConverter x:Key="TimeSpanConverter"/>
+        <local:DateToWorkDayBackgroundConverter x:Key="DateToWorkDayBgConverter"/>
     </local:WindowBase.Resources>
     <local:WindowBase.DataContext>
         <local:HistoryViewModel/>
@@ -44,7 +45,13 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Calendar VerticalAlignment="Top" Margin="8,8,8,0" SelectedDate="{Binding SelectedDate}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" DisplayDate="{Binding SelectedDate}" GotMouseCapture="Calendar_GotMouseCapture"/>
+            <Calendar VerticalAlignment="Top" Margin="8,8,8,0" SelectedDate="{Binding SelectedDate}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" DisplayDate="{Binding SelectedDate}" GotMouseCapture="Calendar_GotMouseCapture">
+                <Calendar.CalendarDayButtonStyle>
+                    <Style TargetType="CalendarDayButton" BasedOn="{StaticResource {x:Type CalendarDayButton}}">
+                        <Setter Property="Background" Value="{Binding Converter={StaticResource DateToWorkDayBgConverter}}"/>
+                    </Style>
+                </Calendar.CalendarDayButtonStyle>
+            </Calendar>
             <Button x:Name="TodayButton" Content="Today" VerticalAlignment="Top" Click="TodayButton_Click" Margin="8,8,8,0" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" />
             <TextBlock TextWrapping="Wrap" Text="Day total" Margin="8,8,8,0" Grid.Row="2"/>
             <TextBlock TextWrapping="Wrap" Text="{Binding SelectedDay.Time, Converter={StaticResource TimeSpanConverter}, FallbackValue=0h 00m, Mode=OneWay}" Margin="8,0,8,0" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
