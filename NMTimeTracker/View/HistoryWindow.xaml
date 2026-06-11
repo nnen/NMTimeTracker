@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NMTimeTracker"
-        xmlns:View="clr-namespace:NMTimeTracker.View" x:Class="NMTimeTracker.HistoryWindow"
+        xmlns:View="clr-namespace:NMTimeTracker.View" xmlns:System="clr-namespace:System;assembly=System.Runtime" x:Class="NMTimeTracker.HistoryWindow"
         mc:Ignorable="d"
         Title="History" Height="450" Width="800" IsVisibleChanged="WindowBase_IsVisibleChanged">
     <local:WindowBase.Resources>
@@ -73,12 +73,13 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <local:DayList x:Name="dayList" Grid.Row="0" Days="{Binding SelectedDaysViewModel, Mode=OneWay, diag:PresentationTraceSources.TraceLevel=High}" SelectedDay="{Binding SelectedDayViewModel, Mode=TwoWay}" xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"/>
+            <local:DayList xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase" x:Name="dayList" Grid.Row="0" Days="{Binding SelectedDaysViewModel, Mode=OneWay, PresentationTraceSources.TraceLevel=High}" SelectedDay="{Binding SelectedDayViewModel, Mode=TwoWay}"/>
             <!-- <local:IntervalList x:Name="intervalList" Intervals="{Binding SelectedDay.Intervals, Mode=OneWay}" SelectedInterval="{Binding SelectedInterval, Mode=TwoWay}"/> -->
             <View:DayTimelineControl Grid.Row="1" Height="24" Margin="0,2,0,2"
                 Intervals="{Binding SelectedDay.Intervals, Mode=OneWay}"
                 Date="{Binding SelectedDate, Mode=OneWay}"
-                SelectedInterval="{Binding SelectedInterval, Mode=TwoWay}"/>
+                SelectedInterval="{Binding SelectedInterval, Mode=TwoWay}"
+                PreviewMouseLeftButtonDown="Timeline_PreviewMouseLeftButtonDown"/>
             <DataGrid x:Name="IntervalsDataGrid" AutoGenerateColumns="False" Grid.Row="2" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding SelectedDay.Intervals, Mode=OneWay}" SelectedItem="{Binding SelectedInterval, Mode=TwoWay}" GridLinesVisibility="None" AlternatingRowBackground="#FFE2FFDF" PreviewKeyDown="IntervalsDataGrid_PreviewKeyDown" SelectionChanged="IntervalsDataGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Start" Binding="{Binding StartTimeOfDay}" IsReadOnly="True" />

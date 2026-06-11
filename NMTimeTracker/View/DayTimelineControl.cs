@@ -39,6 +39,20 @@ namespace NMTimeTracker.View
                     null,
                     FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        public static readonly DependencyProperty TimelineStartProperty =
+            DependencyProperty.Register(
+                nameof(TimelineStart),
+                typeof(TimeOnly?),
+                typeof(DayTimelineControl),
+                new FrameworkPropertyMetadata((TimeOnly?)new TimeOnly(6, 0), FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public static readonly DependencyProperty TimelineEndProperty =
+            DependencyProperty.Register(
+                nameof(TimelineEnd),
+                typeof(TimeOnly?),
+                typeof(DayTimelineControl),
+                new FrameworkPropertyMetadata((TimeOnly?)new TimeOnly(20, 0), FrameworkPropertyMetadataOptions.AffectsRender));
+
         public IEnumerable<Interval>? Intervals
         {
             get => (IEnumerable<Interval>?)GetValue(IntervalsProperty);
@@ -55,6 +69,18 @@ namespace NMTimeTracker.View
         {
             get => (Interval?)GetValue(SelectedIntervalProperty);
             set => SetValue(SelectedIntervalProperty, value);
+        }
+
+        public TimeOnly? TimelineStart
+        {
+            get => (TimeOnly?)GetValue(TimelineStartProperty);
+            set => SetValue(TimelineStartProperty, value);
+        }
+
+        public TimeOnly? TimelineEnd
+        {
+            get => (TimeOnly?)GetValue(TimelineEndProperty);
+            set => SetValue(TimelineEndProperty, value);
         }
 
         // Populated during OnRender for hit testing
@@ -109,36 +135,63 @@ namespace NMTimeTracker.View
                 new Pen(new SolidColorBrush(Color.FromRgb(160, 160, 160)), 1.0),
                 new Rect(0.5, 0.5, width - 1, height - 1));
 
-            var intervals = Intervals?.ToList();
-            m_renderedRects = new List<(Interval, Rect)>();
-
-            if (intervals == null || intervals.Count == 0) return;
-
             var dayStart = Date.Date;
             var dayEnd = dayStart.AddDays(1);
 
-            var rangeStart = intervals.Select(i => i.Start < dayStart ? dayStart : i.Start).Min();
-            var rangeEnd   = intervals.Select(i => i.End   > dayEnd   ? dayEnd   : i.End  ).Max();
-            double totalSeconds = (rangeEnd - rangeStart).TotalSeconds;
+            // Base range from TimelineStart/TimelineEnd; expanded outward to cover all intervals
+            DateTime? rangeStart = TimelineStart.HasValue ? dayStart + TimelineStart.Value.ToTimeSpan() : null;
+            DateTime? rangeEnd   = TimelineEnd.HasValue   ? dayStart + TimelineEnd.Value.ToTimeSpan()   : null;
+
+            var intervals = Intervals?.ToList();
+            m_renderedRects = new List<(Interval, Rect)>();
+
+            if (intervals != null && intervals.Count > 0)
+            {
+                var iMin = intervals.Select(i => i.Start < dayStart ? dayStart : i.Start).Min();
+                var iMax = intervals.Select(i => i.End   > dayEnd   ? dayEnd   : i.End  ).Max();
+                rangeStart = rangeStart.HasValue ? (rangeStart.Value < iMin ? rangeStart.Value : iMin) : iMin;
+                rangeEnd   = rangeEnd.HasValue   ? (rangeEnd.Value   > iMax ? rangeEnd.Value   : iMax) : iMax;
+            }
+
+            if (!rangeStart.HasValue || !rangeEnd.HasValue) return;
+
+            double totalSeconds = (rangeEnd.Value - rangeStart.Value).TotalSeconds;
             if (totalSeconds <= 0) return;
 
             var selectedInterval = SelectedInterval;
 
-            foreach (var interval in intervals)
+            if (intervals != null)
             {
-                var start = interval.Start < dayStart ? dayStart : interval.Start;
-                var end   = interval.End   > dayEnd   ? dayEnd   : interval.End;
-                if (end <= start) continue;
+                foreach (var interval in intervals)
+                {
+                    var start = interval.Start < dayStart ? dayStart : interval.Start;
+                    var end   = interval.End   > dayEnd   ? dayEnd   : interval.End;
+                    if (end <= start) continue;
 
-                double x = (start - rangeStart).TotalSeconds / totalSeconds * width;
-                double w = Math.Max(1.0, (end - start).TotalSeconds / totalSeconds * width);
-                var rect = new Rect(x, 1, w, height - 2);
+                    double x = (start - rangeStart.Value).TotalSeconds / totalSeconds * width;
+                    double w = Math.Max(1.0, (end - start).TotalSeconds / totalSeconds * width);
+                    var rect = new Rect(x, 1, w, height - 2);
 
-                bool isSelected = (interval == selectedInterval);
+                    bool isSelected = (interval == selectedInterval);
+                    var brush = isSelected ? GetSelectedBrush(interval.StartReason) : GetBrush(interval.StartReason);
+                    dc.DrawRectangle(brush, null, rect);
+                    m_renderedRects.Add((interval, rect));
+                }
+            }
 
-                var brush = isSelected ? GetSelectedBrush(interval.StartReason) : GetBrush(interval.StartReason);
-                dc.DrawRectangle(brush, null, rect);
-                m_renderedRects.Add((interval, rect));
+            // Draw hour and half-hour tick marks on top of the intervals
+            var hourPen   = new Pen(new SolidColorBrush(Color.FromArgb( 90, 0, 0, 0)), 1.0);
+            var halfHrPen = new Pen(new SolidColorBrush(Color.FromArgb( 50, 0, 0, 0)), 1.0);
+            hourPen.Freeze();
+            halfHrPen.Freeze();
+
+            var tick = rangeStart.Value.Date.AddMinutes(Math.Ceiling(rangeStart.Value.TimeOfDay.TotalMinutes / 30.0) * 30);
+            while (tick <= rangeEnd.Value)
+            {
+                double x = (tick - rangeStart.Value).TotalSeconds / totalSeconds * width;
+                bool isHour = (tick.Minute == 0);
+                dc.DrawLine(isHour ? hourPen : halfHrPen, new Point(x, 1), new Point(x, height - 1));
+                tick = tick.AddMinutes(30);
             }
         }
 

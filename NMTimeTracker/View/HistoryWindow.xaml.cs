@@ -127,6 +127,11 @@ namespace NMTimeTracker
             DeleteSelectedModifiers();
         }
 
+        private void Timeline_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            IntervalsDataGrid.Focus();
+        }
+
         private void IntervalsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (IntervalsDataGrid.SelectedItem != null)
