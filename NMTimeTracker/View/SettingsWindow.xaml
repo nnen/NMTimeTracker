@@ -45,6 +45,10 @@
                 <Label Content="Main window always on top" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding Settings.MainWindowAlwaysOnTop}" Margin="8,3,8,3"/>
 
+                <Label Content="Continuation window (minutes, 0 = off)" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
+                <TextBlock Text="If tracking is restarted within this many minutes of stopping, the previous interval is resumed instead of creating a new one." VerticalAlignment="Center" Padding="0" Margin="8,0,8,3" TextWrapping="Wrap"/>
+                <TextBox VerticalAlignment="Center" Text="{Binding Settings.ContinuationLimitMinutes}" Margin="8,3,8,3" Width="60" HorizontalAlignment="Left"/>
+
                 <Label Content="Generate history" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3" Visibility="{Binding DevOptionsVisible, Mode=OneWay}"/>
                 <Label Content="This can be used to generate mock history for development purposes." VerticalAlignment="Center" Padding="0" Margin="8,3,8,3"/>
                 <Button x:Name="GenerateHistoryButton" Content="Generate history..." HorizontalAlignment="Left" Margin="8,3,8,3" Padding="5,2,5,2" Click="GenerateHistoryButton_Click" Visibility="{Binding DevOptionsVisible, Mode=OneWay}"/>

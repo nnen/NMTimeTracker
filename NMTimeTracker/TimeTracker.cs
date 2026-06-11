@@ -200,11 +200,24 @@ namespace NMTimeTracker
             if (m_store != null)
             {
                 var now = DateTime.Now;
+
+                int limitMinutes = App.Current.Settings.ContinuationLimitMinutes;
+                if (limitMinutes > 0)
+                {
+                    var last = m_today.LastInterval;
+                    if (last != null && (now - last.End).TotalMinutes <= limitMinutes)
+                    {
+                        last.End = now;
+                        last.EndReason = TimeTrackerEvents.StillRunning;
+                        m_store.UpdateInterval(last);
+                        CurrentIntervalId = last.Id;
+                        return;
+                    }
+                }
+
                 var interval = m_store.CreateInterval(now, reason);
                 CurrentIntervalId = interval.Id;
             }
-
-            return;
         }
 
         public void StopTime(TimeTrackerEvents reason)
