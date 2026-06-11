@@ -19,6 +19,7 @@ namespace NMTimeTracker
         private bool m_stopOnScreenSaver = true;
         // private DayOfWeek m_firstDayOfWeek = DayOfWeek.Monday;
         private bool m_mainWindowAlwaysOnTop = false;
+        public int m_hoursPerBusinessDay = 8;
         private int m_continuationLimitMinutes = 5;
 
         public bool StartOnLaunch
@@ -75,8 +76,12 @@ namespace NMTimeTracker
             }
         }
 
-        public int HoursPerBusinessDay => 8;
-
+        public int HoursPerBusinessDay
+        {
+            get => m_hoursPerBusinessDay;
+            set => SetProperty(nameof(HoursPerBusinessDay), ref m_hoursPerBusinessDay, value);
+        }
+         
         public int ContinuationLimitMinutes
         {
             get => m_continuationLimitMinutes;

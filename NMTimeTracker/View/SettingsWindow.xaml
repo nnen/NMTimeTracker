@@ -25,10 +25,18 @@
                 <Label Content="{Binding VersionString, FallbackValue=0.1.0.0 (CONFIG)}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" Margin="8,3,8,3"/>
 
                 <Label Content="Settings file" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
-                <Label Content="{Binding SettingsFilePath, FallbackValue=Settings File Path, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" Margin="8,3,8,3"/>
+                <TextBlock Text="{Binding SettingsFilePath, FallbackValue=Settings File Path, Mode=OneWay}" TextWrapping="Wrap" Margin="8,3,8,3"/>
+                <StackPanel Orientation="Horizontal" Margin="8,3,8,3">
+                    <Button Content="Copy path" Padding="5,2,5,2" Click="CopySettingsPath_Click"/>
+                    <Button Content="Show in Explorer" Padding="5,2,5,2" Margin="4,0,0,0" Click="ShowSettingsPath_Click"/>
+                </StackPanel>
 
                 <Label Content="Database file" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
-                <Label Content="{Binding DatabaseFilePath, FallbackValue=Database File Path, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" Margin="8,3,8,3"/>
+                <TextBlock Text="{Binding DatabaseFilePath, FallbackValue=Database File Path, Mode=OneWay}" TextWrapping="Wrap" Margin="8,3,8,3"/>
+                <StackPanel Orientation="Horizontal" Margin="8,3,8,3">
+                    <Button Content="Copy path" Padding="5,2,5,2" Click="CopyDatabasePath_Click"/>
+                    <Button Content="Show in Explorer" Padding="5,2,5,2" Margin="4,0,0,0" Click="ShowDatabasePath_Click"/>
+                </StackPanel>
 
                 <Label Content="Start timer on launch" VerticalAlignment="Center" FontWeight="Bold" Padding="0" Margin="8,16,8,3"/>
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding Settings.StartOnLaunch}" Margin="8,3,8,3"/>

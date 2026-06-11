@@ -2,6 +2,7 @@
 using NMTimeTracker.View;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,30 @@ namespace NMTimeTracker
                 settingsViewModel.Settings.Save();
             }
             Close();
+        }
+
+        private void CopySettingsPath_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel vm && !string.IsNullOrEmpty(vm.SettingsFilePath))
+                System.Windows.Clipboard.SetText(vm.SettingsFilePath);
+        }
+
+        private void ShowSettingsPath_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel vm && !string.IsNullOrEmpty(vm.SettingsFilePath))
+                Process.Start("explorer.exe", $"/select,\"{vm.SettingsFilePath}\"");
+        }
+
+        private void CopyDatabasePath_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel vm && !string.IsNullOrEmpty(vm.DatabaseFilePath))
+                System.Windows.Clipboard.SetText(vm.DatabaseFilePath);
+        }
+
+        private void ShowDatabasePath_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel vm && !string.IsNullOrEmpty(vm.DatabaseFilePath))
+                Process.Start("explorer.exe", $"/select,\"{vm.DatabaseFilePath}\"");
         }
 
         private void GenerateHistoryButton_Click(object sender, RoutedEventArgs e)
