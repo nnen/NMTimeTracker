@@ -82,8 +82,8 @@ namespace NMTimeTracker
                 }
                 else
                 {
-                    this.Show();
                     this.WindowState = WindowState.Normal;
+                    this.Show();
                 }
             };
 
